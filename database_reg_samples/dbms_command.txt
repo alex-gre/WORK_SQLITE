@@ -1,0 +1,20 @@
+.show
+-----------------------
+.schema sqlite_master
+-----------------------
+.headers on
+.mode column
+.timer on
+-------------------
+-----------dump
+.output dump_db.sql
+.dump
+.exit
+-----------------------
+------------execute sql
+.read file.sql
+-----------------------
+-----------------------
+---------format output
+.width 10,20,10
+
