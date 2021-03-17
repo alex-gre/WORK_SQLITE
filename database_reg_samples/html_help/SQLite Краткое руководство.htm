@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta name="baidu_union_verify" content="fca3240ebd8212086fdb898637e399a3">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQLite Краткое руководство</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="HTML,CSS,JavaScript,SQL,PHP,jQuery,ASP,XML,DOM,Bootstrap,веб-разработка,W3C,учебные пособия,программирование,обучение,обучение,викторина,грунтовка,занятия,Рекомендации,Примеры,исходный код,цвета,демос,чаевые">
+<meta name="Description" content="Хорошо организованный и простой для понимания Web Building учебники с большим количеством примеров того, как использовать HTML, CSS, JavaScript, SQL, PHP и XML.">
+<link rel="stylesheet" href="http://stat777.com/js/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/lib/w3.css">
+<link rel="stylesheet" type="text/css" href="/browserref.css">
+<link rel="stylesheet" href="/lib/custom.css">
+<script src="http://stat777.com/js/jquery.min.js"></script>
+<script src="http://stat777.com/js/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://stat777.com/js/LRS.js"></script>
+</head>
+<!-- END HEAD -->
+
+
+
+<body>
+	<div class="w3-container top">
+	<a class="w3schools-logo" href="/ru/index.html">w3ii<span class="dotcom">.com</span></a>
+	<div class="w3-right toptext w3-wide">
+		<a href="http://www.w3iz.com" target="_blank">Форум</a> | 
+		Последние учебники веб-разработки	</div>
+</div>	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77782717-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+	
+	<div class='w3-card-2 w3-slim topnav' id='topnav'>
+		<div style="overflow: auto;">
+			<ul class="w3-navbar w3-left" style="width: 55%; overflow: hidden; height: 44px">
+				<li><a href='javascript:void(0);' class='topnav-localicons w3-hide-large w3-left' onclick='open_menu()' title='Menu'>&#9776;</a></li>
+				<li><a href="/ru/" class='topnav-icons fa fa-home w3-left' title='主页'></a></li>
+				<li><a href="/ru/html/default.html" class='w3-hide-small' title='HTML Руководство'>HTML</a></li>
+				<li><a href="/ru/css/default.html" class='w3-hide-small' title='CSS Руководство'>CSS</a></li>
+				<li><a href="/ru/js/default.html" class='w3-hide-small' title='JAVASCRIPT Руководство'>JAVASCRIPT</a></li>
+				<li><a href="/ru/sql/default.html" class='w3-hide-small' title='SQL Руководство'>SQL</a></li>
+				<li><a href="/ru/php/default.html" class='w3-hide-small' title='PHP Руководство'>PHP</a></li>
+				<li><a href="/ru/bootstrap/default.html" class='w3-hide-small' title='BOOTSTRAP Руководство'>BOOTSTRAP</a></li>
+				<li><a href="/ru/jquery/default.html" class='w3-hide-small' title='JQUERY Руководство'>JQUERY</a></li>
+				<li><a href="/ru/angular/default.html" class='w3-hide-small' title='ANGULAR Руководство'>ANGULAR</a></li>
+				<li><a href="/ru/xml/default.html" class='w3-hide-small' title='XML Руководство'>XML</a></li>
+			</ul>
+			<ul class="w3-navbar w3-right" style='width: 45%; overflow: hidden; height: 44px; text-transform:uppercase;'>
+				<li class="w3-right"><div class="select-language-wrap"><select name="languague" class="form-control select-language"><option value="en-US">English</option><option value="pt">Português</option><option value="id">Indonesia</option><option value="es">Español</option><option value="it">Italiano</option><option value="de">Deutsch</option><option value="fr">Français</option><option value="ru" selected>Pусский</option><option value="pl">polski</option><option value="tr">Türkçe‎</option><option value="ro">Română‎</option><option value="th">ไทย</option><option value="ar">العربية</option><option value="ko">한국어</option><option value="ja">日本语</option><option value="zh-TW">繁體中文</option><option value="zh-CN">简体中文</option></select><script>
+$(function() {
+	
+	$('.select-language').change(function() {
+	
+		var language = $(this).val();
+		var right = LRS.string.right(location.href, location.host);
+		var reg = new RegExp("\/([^\/]*)\/", 'i');
+		var arr = right.match(reg);
+		if(arr) {
+			if(LRS.array.has([
+'en-US', 
+'pt', 
+'id', 
+'es', 
+'it', 
+'de', 
+'fr', 
+'ru', 
+'pl', 
+'tr', 
+'ro', 
+'th', 
+'ar', 
+'ko', 
+'ja', 
+'zh-TW', 
+'zh-CN', 
+], arr[1])) {
+				right = right.substr(arr[1].length + 1);
+			}
+		}
+		var languageSection = language == 'en-US' ? '' : ('/' + language);
+		location.href = location.origin + languageSection + right;
+	});
+	
+});
+</script>	</div></li>
+				<li class="w3-right"><a id='topnavbtn_tutorials' href='javascript:void(0);' onclick='w3_open_nav("tutorials")' title='Tutorials'>Учебники <i class='fa fa-caret-down'></i><i class='fa fa-caret-up' style='display: none'></i></a></li>
+				<li class="w3-right"><a id='topnavbtn_references' href='javascript:void(0);' onclick='w3_open_nav("references")' title='References'>Рекомендации <i class='fa fa-caret-down'></i><i class='fa fa-caret-up' style='display: none'></i></a></li>
+				<li class="w3-right"><div class="donate-article"><div class="donate-wrapper">
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="QMX5QADTFSTGG">
+		<table>
+		<tr>
+		<input type="hidden" name="on0" value="Donate">
+		<select name="os0" class="form-control">
+		<option value="a">$ 4.99 USD</option>
+		<option value="b">$ 9.99 USD</option>
+		<option value="c">$ 49.90 USD</option>
+		<option value="d">$ 99.90 USD</option>
+		</select></tr>
+		</table>
+		<input type="hidden" name="currency_code" value="USD">
+		<input class="donate-button" type="image" src="http://stat777.com/images/utils/btn_sponsor.gif" border="0" name="submit" alt="PayPal——最安全便捷的在线支付方式！">
+		<img alt="" border="0" src="https://www.paypalobjects.com/zh_XC/i/scr/pixel.gif" width="1" height="1">
+		</form></div></div></li>
+			</ul>
+			
+			<div id='nav_tutorials' class='w3-dropnav w3-card-2'>
+				<span onclick='w3_close_nav("tutorials")' class='w3-closebtn w3-xlarge w3-hover-text-white'>&times;</span>
+				<div class='w3-row-padding w3-padding-xxlarge'>
+					<div class='w3-col l2 m4'>
+						<h3>HTML/CSS</h3>
+						<a href="/ru/html/default.html">Учить HTML</a> 
+						<a href="/ru/css/default.html">Учить CSS</a> 
+						<a href="/ru/w3css/default.html">Учить W3.CSS</a> 
+						<a href="/ru/colors/default.html">Учить Colors</a> 
+						<a href="/ru/bootstrap/default.html">Учить Bootstrap</a>
+						
+						<h3>JavaScript</h3>
+						<a href="/ru/js/default.html">Учить JavaScript</a> 
+						<a href="/ru/jquery/default.html">Учить jQuery</a>
+						<a href="/ru/jqueryui/default.html">Учить JqueryUI</a> 
+						<a href="/ru/jquerymobile/default.html">Учить jQuery Mobile</a> 
+						<a href="/ru/appml/default.html">Учить AppML</a> 
+						<a href="/ru/angular/default.html">Учить AngularJS</a>
+						<a href="/ru/angular_material/default.html">Учить Angular Material</a>
+						<a href="/ru/extjs/default.html">Учить Ext.js</a>
+						<a href="/ru/ajax/default.html">Учить AJAX</a> 
+						<a href="/ru/json/default.html">Учить JSON</a>
+						
+						<h3>XML Учебники</h3>
+						<a href="/ru/xml/default.html">Учить XML</a>
+						<a href="/ru/dom/default.html">Учить XML DOM</a> 
+						<a href="/ru/xsl/default.html">Учить XSLT</a>
+						<a href="/ru/ajax/default.html">Учить AJAX</a>
+						<a href="/ru/dtd/default.html">Учить DTD</a>
+						<a href="/ru/wsdl/default.html">Учить WSDL</a>
+						<a href="/ru/xpath/default.html">Учить XPath</a>
+						<a href="/ru/aiml/default.html">Учить AIML</a>
+						<a href="/ru/ebxml/default.html">Учить ebXML</a>
+						<a href="/ru/xml-rpc/default.html">Учить XML-RPC</a>
+						<a href="/ru/xquery/default.html">Учить XQuery</a>
+						<a href="/ru/xsd/default.html">Учить XSD</a>
+						<a href="/ru/xslt/default.html">Учить XSLT</a>
+						
+						<h3>академический</h3>
+						<a href="/ru/agile/default.html">Учить Agile</a>
+						<a href="/ru/accounting_basics/default.html">Учить Основы бухгалтерского учета</a>
+						<a href="/ru/artificial_intelligence/default.html">Учить Искусственный интеллект</a>
+						<a href="/ru/automata_theory/default.html">Учить Теория автоматов</a>
+						<a href="/ru/biometrics/default.html">Учить биометрия</a>
+						<a href="/ru/behavior_driven_development/default.html">Учить Поведение Driven Development</a>
+						<a href="/ru/cloud_computing/default.html">Учить Облачные вычисления</a>
+						<a href="/ru/compiler_design/default.html">Учить Compiler Design</a>
+						<a href="/ru/computer_fundamentals/default.html">Учить Основы работы с компьютером</a>
+						<a href="/ru/computer_graphics/default.html">Учить Компьютерная графика</a>
+						<a href="/ru/computer_logical_organization/default.html">Учить Компьютер Логическая организация</a>
+						<a href="/ru/cryptography/default.html">Учить криптография</a>
+						<a href="/ru/computer_networking/default.html">Учить Компьютерная сеть</a>
+						<a href="/ru/data_mining/default.html">Учить Сбор данных</a>
+						<a href="/ru/distributed_dbms/default.html">Учить Распределенная СУБД</a>
+						<a href="/ru/dwh/default.html">Учить Хранилище данных</a>
+						<a href="/ru/dbms/default.html">Учить DBMS</a>
+						<a href="/ru/dip/default.html">Учить Цифровая обработка изображений</a>
+						<a href="/ru/digital_signal_processing/default.html">Учить Цифровая обработка сигналов</a>
+						<a href="/ru/discrete_mathematics/default.html">Учить Дискретная математика</a>
+						<a href="/ru/embedded_systems/default.html">Учить Встроенные системы</a>
+						<a href="/ru/e_commerce/default.html">Учить Электронная коммерция</a>
+						<a href="/ru/extreme_programming/default.html">Учить Экстремальное программирование</a>
+						<a href="/ru/estimation_techniques/default.html">Учить Оценка методы</a>
+						<a href="/ru/genetic_algorithms/default.html">Учить Генетические алгоритмы</a>
+						<a href="/ru/graph_theory/default.html">Учить Теория графов</a>
+						<a href="/ru/human_computer_interface/default.html">Учить Интерфейс человек Компьютер</a>
+						<a href="/ru/information_security_cyber_law/default.html">Учить Закон информационной безопасности Cyber</a>
+						<a href="/ru/internet_technologies/default.html">Учить Интернет-технологии</a>
+						<a href="/ru/java_dip/default.html">Учить Java Цифровая обработка изображений</a>
+						<a href="/ru/management_information_system/default.html">Учить Информационная система управления</a>
+						<a href="/ru/mobile_computing/default.html">Учить Мобильные вычисления</a>
+						<a href="/ru/ooad/default.html">Учить OOAD</a>
+						<a href="/ru/operating_system/default.html">Учить Операционная система</a>
+						<a href="/ru/parallel_computer_architecture/default.html">Учить Архитектура параллельных вычислительных</a>
+						<a href="/ru/parallel_algorithm/default.html">Учить Параллельный алгоритм</a>
+						<a href="/ru/power_electronics/default.html">Учить Силовая электроника</a>
+						<a href="/ru/sdlc/default.html">Учить Разработка программного обеспечения жизненного цикла</a>
+						<a href="/ru/signals_and_systems/default.html">Учить Сигналы и системы</a>
+						<a href="/ru/software_architecture_design/default.html">Учить Архитектура программного обеспечения Дизайн</a>
+						<a href="/ru/software_engineering/default.html">Учить Программная инженерия</a>
+						<a href="/ru/vlsi_design/default.html">Учить VLSI дизайн</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>Веб-разработка</h3>
+						<a href="/ru/http/default.html">Учить HTTP</a>
+						<a href="/ru/mvc_framework/default.html">Учить MVC Framework</a>
+						<a href="/ru/sass/default.html">Учить Sass</a>
+						<a href="/ru/less/default.html">Учить Less</a>
+						<a href="/ru/webservices/default.html">Учить Web Services</a>
+						<a href="/ru/restful/default.html">Учить RESTful</a>
+						<a href="/ru/web_icons/default.html">Учить Web Icons</a>
+						<a href="/ru/websockets/default.html">Учить WebSockets</a>
+						<a href="/ru/rss/default.html">Учить RSS</a>
+						<a href="/ru/ipv4/default.html">Учить IPv4</a>
+						<a href="/ru/ipv6/default.html">Учить IPv6</a>
+						<a href="/ru/soap/default.html">Учить SOAP</a>
+						<a href="/ru/svn/default.html">Учить SVN</a>
+						<a href="/ru/uddi/default.html">Учить UDDI</a>
+						<a href="/ru/cherrypy/default.html">Учить CherryPy</a>
+						<a href="/ru/ab_testing/default.html">Учить Тестирование А / Б</a>
+						<a href="/ru/aurelia/default.html">Учить Aurelia</a>
+						<a href="/ru/backbonejs/default.html">Учить BackboneJS</a>
+						<a href="/ru/codeigniter/default.html">Учить CodeIgniter</a>
+						<a href="/ru/coffeescript/default.html">Учить CoffeeScript</a>
+						<a href="/ru/cpanel/default.html">Учить cPanel</a>
+						<a href="/ru/drupal/default.html">Учить Drupal</a>
+						<a href="/ru/django/default.html">Учить Django</a>
+						<a href="/ru/emberjs/default.html">Учить EmberJS</a>
+						<a href="/ru/expressjs/default.html">Учить ExpressJS</a>
+						<a href="/ru/flask/default.html">Учить Flask</a>
+						<a href="/ru/flex/default.html">Учить Flex</a>
+						<a href="/ru/foundation/default.html">Учить Foundation</a>
+						<a href="/ru/grav/default.html">Учить Grav</a>
+						<a href="/ru/grunt/default.html">Учить Grunt</a>
+						<a href="/ru/gulp/default.html">Учить Gulp</a>
+						<a href="/ru/gwt/default.html">Учить GWT</a>
+						<a href="/ru/joomla/default.html">Учить Joomla</a>
+						<a href="/ru/jsf/default.html">Учить JSF</a>
+						<a href="/ru/knockoutjs/default.html">Учить KnockoutJS</a>
+						<a href="/ru/magento/default.html">Учить Magento</a>
+						<a href="/ru/materialdesignlite/default.html">Учить Material Design Lite</a>
+						<a href="/ru/materialize/default.html">Учить Materialize</a>
+						<a href="/ru/mootools/default.html">Учить MooTools</a>
+						<a href="/ru/purecss/default.html">Учить Pure.CSS</a>
+						<a href="/ru/reactjs/default.html">Учить ReactJS</a>
+						<a href="/ru/ruby-on-rails/default.html">Учить Ruby on Rails</a>
+						<a href="/ru/turbogears/default.html">Учить TurboGears</a>
+						<a href="/ru/vbscript/default.html">Учить VBScript</a>
+						<a href="/ru/web_developers_guide/default.html">Учить Веб Руководство разработчика</a>
+						<a href="/ru/web2py/default.html">Учить Web2py</a>
+						<a href="/ru/webgl/default.html">Учить WebGL</a>
+						<a href="/ru/webrtc/default.html">Учить WebRTC</a>
+						<a href="/ru/wordpress/default.html">Учить WordPress</a>
+						<a href="/ru/xhtml/default.html">Учить XHTML</a>
+						
+						
+						
+						<h3>Web Building</h3>
+						<a href="/ru/website/default.html">Web Building</a> 
+						<a href="/ru/browsers/default.html">веб-статистика</a>
+						
+						<h3>Apache Учебники</h3>
+						<a href="/ru/ant/default.html">Учить Apache Ant</a>
+						<a href="/ru/apache_poi/default.html">Учить Apache POI</a>
+						<a href="/ru/apache_poi_ppt/default.html">Учить Apache POI PPT</a>
+						<a href="/ru/apache_poi_word/default.html">Учить Apache POI Word</a>
+						<a href="/ru/tika/default.html">Учить Apache TIKA</a>
+						<a href="/ru/xerces/default.html">Учить Apache Xerces</a>
+						<a href="/ru/apache_flume/default.html">Учить Apache Flume</a>
+						<a href="/ru/impala/default.html">Учить Apache Impala</a>
+						<a href="/ru/apache_pig/default.html">Учить Apache Pig</a>
+						<a href="/ru/apache_spark/default.html">Учить Apache Spark</a>
+						<a href="/ru/apache_storm/default.html">Учить Apache Storm</a>
+						<a href="/ru/apache_kafka/default.html">Учить Apache Kafka</a>
+						
+						<h3>MISC Учебники</h3>
+						<a href="/ru/drools/default.html">Учить Drools</a>
+						<a href="/ru/dll/default.html">Учить DLL</a>
+						<a href="/ru/git/default.html">Учить Git</a>
+						<a href="/ru/gradle/default.html">Учить Gradle</a>
+						<a href="/ru/gnu_debugger/default.html">Учить GDB Debugger</a>
+						<a href="/ru/itil/default.html">Учить ITIL</a>
+						<a href="/ru/jboss_fuse/default.html">Учить JBoss Fuse</a>
+						<a href="/ru/makefile/default.html">Учить Makefile</a>
+						<a href="/ru/parrot/default.html">Учить Parrot</a>
+						<a href="/ru/kdbplus/default.html">Учить KDB+</a>
+						<a href="/ru/radius/default.html">Учить Radius</a>
+						<a href="/ru/uml/default.html">Учить UML</a>
+						<a href="/ru/unix_sockets/default.html">Учить Unix Socket</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>Интернет-маркетинг</h3>
+						<a href="/ru/seo/default.html">Учить SEO</a>
+						<a href="/ru/social_media_marketing/default.html">Учить Маркетинг в области СМИ</a>
+						<a href="/ru/pay_per_click/default.html">Учить Pay Per Click</a>
+						<a href="/ru/web_analytics/default.html">Учить веб-аналитика</a>
+						<a href="/ru/online_marketing/default.html">Учить Онлайн маркетинг</a>
+						<a href="/ru/mobile_marketing/default.html">Учить Мобильный маркетинг</a>
+						<a href="/ru/email_marketing/default.html">Учить Рекламная рассылка</a>
+						<a href="/ru/content_marketing/default.html">Учить Содержание маркетинга</a>
+						<a href="/ru/twitter_marketing/default.html">Учить Twitter Маркетинг</a>
+						<a href="/ru/pinterest_marketing/default.html">Учить Pinterest маркетинг</a>
+					
+						<h3>HTML Графика</h3>
+						<a href="/ru/canvas/default.html">Учить Canvas</a> 
+						<a href="/ru/svg/default.html">Учить SVG</a> 
+						<a href="/ru/icons/default.html">Учить Icons</a> 
+						<a href="/ru/googleapi/default.html">Учить Google Maps</a> 
+						<a href="/ru/games/default.html">Учить HTML Games</a>
+						
+						<h3>Telecom Учебники</h3>
+						<a href="/ru/5g/default.html">Учить 5G</a>
+						<a href="/ru/cdma/default.html">Учить CDMA</a>
+						<a href="/ru/gprs/default.html">Учить GPRS</a>
+						<a href="/ru/gsm/default.html">Учить GSM</a>
+						<a href="/ru/i-mode/default.html">Учить i-Mode</a>
+						<a href="/ru/lte/default.html">Учить LTE</a>
+						<a href="/ru/ngn/default.html">Учить NGN</a>
+						<a href="/ru/session_initiation_protocol/default.html">Учить SIP</a>
+						<a href="/ru/telecom-billing/default.html">Учить Telecom Billing</a>
+						<a href="/ru/umts/default.html">Учить UMTS</a>
+						<a href="/ru/wap/default.html">Учить WAP</a>
+						<a href="/ru/wi-fi/default.html">Учить Wi-Fi</a>
+						<a href="/ru/wimax/default.html">Учить WiMAX</a>
+						<a href="/ru/wml/default.html">Учить WML</a>
+						
+						<h3>Разработка мобильных</h3>
+						<a href="/ru/android/default.html">Учить Android</a>
+						<a href="/ru/cordova/default.html">Учить Cordova</a>
+						<a href="/ru/ios/default.html">Учить iOS</a>
+						<a href="/ru/ionic/default.html">Учить Ionic</a>
+						<a href="/ru/meteor/default.html">Учить Meteor</a>
+						<a href="/ru/phonegap/default.html">Учить PhoneGap</a>
+						<a href="/ru/sl4a/default.html">Учить SL4A</a>
+						
+						<h3>Mainframe разработка</h3>
+						<a href="/ru/cics/default.html">Учить CICS</a>
+						<a href="/ru/ims_db/default.html">Учить IMS DB</a>
+						<a href="/ru/vsam/default.html">Учить VSAM</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>на стороне сервера</h3>
+						<a href="/ru/sql/default.html">Учить SQL</a> 
+						<a href="/ru/php/default.html">Учить PHP</a>
+						<a href="/ru/php7/default.html">Учить PHP 7</a>
+						<a href="/ru/asp/default.html">Учить ASP</a> 
+						<a href="/ru/aspnet/default.html">Учить ASP.NET</a>
+						<a href="/ru/ruby/default.html">Учить Ruby</a>
+						<a href="/ru/perl/default.html">Учить Perl</a>
+						<a href="/ru/laravel/default.html">Учить Laravel</a>
+						<a href="/ru/python/default.html">Учить Python</a>
+						<a href="/ru/python3/default.html">Учить Python 3</a>
+						<a href="/ru/wxpython/default.html">Учить wxPython</a>
+						<a href="/ru/unix/default.html">Учить UNIX</a>
+						<a href="/ru/swift/default.html">Учить Swift</a>
+						<a href="/ru/nodejs/default.html">Учить Node.js</a>
+						<a href="/ru/arduino/default.html">Учить Arduino</a>
+						<a href="/ru/cprogramming/default.html">Учить C</a>
+						<a href="/ru/cplusplus/default.html">Учить C++</a>
+						<a href="/ru/csharp/default.html">Учить C#</a>
+						<a href="/ru/go/default.html">Учить Go</a>
+						<a href="/ru/objective_c/default.html">Учить Objective-C</a>
+						<a href="/ru/d_programming/default.html">Учить D</a>
+						<a href="/ru/r/default.html">Учить R</a>
+						<a href="/ru/pascal/default.html">Учить Pascal</a>
+						<a href="/ru/scala/default.html">Учить Scala</a>
+						<a href="/ru/vba/default.html">Учить VBA</a>
+						<a href="/ru/matlab/default.html">Учить MATLAB</a>
+						<a href="/ru/lisp/default.html">Учить LISP</a>
+						<a href="/ru/groovy/default.html">Учить Groovy</a>
+						<a href="/ru/fortran/default.html">Учить Fortran</a>
+						<a href="/ru/fsharp/default.html">Учить F#</a>
+						<a href="/ru/erlang/default.html">Учить Erlang</a>
+						<a href="/ru/clojure/default.html">Учить Clojure</a>
+						<a href="/ru/apex/default.html">Учить Apex</a>
+						<a href="/ru/assembly_programming/default.html">Учить Assembly</a>
+						<a href="/ru/awk/default.html">Учить AWK</a>
+						<a href="/ru/c_standard_library/default.html">Учить C Library</a>
+						<a href="/ru/cobol/default.html">Учить COBOL</a>
+						<a href="/ru/computer_programming/default.html">Учить Компьютерное программирование</a>
+						<a href="/ru/data_structures_algorithms/default.html">Учить Структура данных & Алгоритмы</a>
+						<a href="/ru/euphoria/default.html">Учить Euphoria</a>
+						<a href="/ru/jcl/default.html">Учить JCL</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>Базы данных Учебники</h3>
+						<a href="/ru/mysql/default.html">Учить MySQL</a>
+						<a href="/ru/memcached/default.html">Учить Memcached</a>
+						<a href="/ru/postgresql/default.html">Учить PostgreSQL</a>
+						<a href="/ru/mongodb/default.html">Учить MongoDB</a>
+						<a href="/ru/sqlite/default.html">Учить SQLite</a>
+						<a href="/ru/db2/default.html">Учить DB2</a>
+						<a href="/ru/documentdb/default.html">Учить DocumentDB</a>
+						<a href="/ru/documentdb_sql/default.html">Учить DocumentDB SQL</a>
+						<a href="/ru/neo4j/default.html">Учить Neo4j</a>
+						<a href="/ru/obiee/default.html">Учить OBIEE</a>
+						<a href="/ru/orientdb/default.html">Учить OrientDB</a>
+						<a href="/ru/plsql/default.html">Учить PL/SQL</a>
+						<a href="/ru/pouchdb/default.html">Учить PouchDB</a>
+						<a href="/ru/t_sql/default.html">Учить T-SQL</a>
+						
+						<h3>Большие данные & аналитика Учебники</h3>
+						<a href="/ru/hadoop/default.html">Учить Hadoop</a>
+						<a href="/ru/hbase/default.html">Учить HBase</a>
+						<a href="/ru/hive/default.html">Учить Hive</a>
+						<a href="/ru/spark_sql/default.html">Учить Spark SQL</a>
+						<a href="/ru/avro/default.html">Учить AVRO</a>
+						<a href="/ru/couchdb/default.html">Учить CouchDB</a>
+						<a href="/ru/cassandra/default.html">Учить Cassandra</a>
+						<a href="/ru/googlecharts/default.html">Учить Google Charts</a>
+						<a href="/ru/hcatalog/default.html">Учить HCatalog</a>
+						<a href="/ru/highcharts/default.html">Учить Highcharts</a>
+						<a href="/ru/map_reduce/default.html">Учить MapReduce</a>
+						<a href="/ru/mahout/default.html">Учить Mahout</a>
+						<a href="/ru/pentaho/default.html">Учить Pentaho</a>
+						<a href="/ru/qlikview/default.html">Учить QlikView</a>
+						<a href="/ru/sas/default.html">Учить SAS</a>
+						<a href="/ru/sqoop/default.html">Учить Sqoop</a>
+						<a href="/ru/statistics/default.html">Учить Статистика</a>
+						<a href="/ru/teradata/default.html">Учить Teradata</a>
+						<a href="/ru/tableau/default.html">Учить Tableau</a>
+						<a href="/ru/zookeeper/default.html">Учить Zookeeper</a>
+						
+						<h3>Веб хостинг</h3>
+						<a href="/ru/ssh/default.html">Учить SSH</a>
+						<a href="/ru/ftp/default.html">Учить FTP</a>
+						<a href="/ru/filezilla/default.html">Учить FileZilla</a>
+						<a href="/ru/webhosting/default.html">Учить Веб хостинг</a>
+						<a href="/ru/create_website/default.html">Учить Создание веб-сайта</a>
+						<a href="/ru/php-mysql/default.html">Учить Php-MySQL</a>
+						<a href="/ru/supercacher/default.html">Учить SuperCacher</a>
+						<a href="/ru/phpmyadmin/default.html">Учить PhpMyAdmin</a>
+						<a href="/ru/whm/default.html">Учить WHM торговый посредник</a>
+						<a href="/ru/smart_phones/default.html">Учить Смартфоны</a>
+						<a href="/ru/cloud/default.html">Учить Облако хостинг</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>JAVA технологии</h3>
+						<a href="/ru/java/default.html">Учить Java</a>
+						<a href="/ru/java8/default.html">Учить Java 8</a>
+						<a href="/ru/jsp/default.html">Учить JSP</a>
+						<a href="/ru/jdb/default.html">Учить JDB</a>
+						<a href="/ru/jdbc/default.html">Учить JDBC</a>
+						<a href="/ru/java_xml/default.html">Учить Java XML</a>
+						<a href="/ru/spring/default.html">Учить Spring</a>
+						<a href="/ru/struts_2/default.html">Учить Struts 2</a>
+						<a href="/ru/hibernate/default.html">Учить Hibernate</a>
+						<a href="/ru/maven/default.html">Учить Maven</a>
+						<a href="/ru/lucene/default.html">Учить Lucene</a>
+						<a href="/ru/servlets/default.html">Учить Servlets</a>
+						<a href="/ru/swing/default.html">Учить SWING</a>
+						<a href="/ru/jmeter/default.html">Учить jMeter</a>
+						<a href="/ru/jackson/default.html">Учить Jackson</a>
+						<a href="/ru/junit/default.html">Учить JUnit</a>
+						<a href="/ru/javamail_api/default.html">Учить JavaMail API</a>
+						<a href="/ru/ejb/default.html">Учить EJB</a>
+						<a href="/ru/guava/default.html">Учить Guava</a>
+						<a href="/ru/ibatis/default.html">Учить iBATIS</a>
+						<a href="/ru/jbpm5/default.html">Учить jBPM5</a>
+						<a href="/ru/jfreechart/default.html">Учить JFreeChart</a>
+						<a href="/ru/jogl/default.html">Учить JOGL</a>
+						<a href="/ru/jpa/default.html">Учить JPA</a>
+						<a href="/ru/log4j/default.html">Учить log4j</a>
+						<a href="/ru/xstream/default.html">Учить XStream</a>
+						<a href="/ru/easymock/default.html">Учить EasyMock</a>
+						<a href="/ru/eclipse/default.html">Учить Eclipse</a>
+						<a href="/ru/design_pattern/default.html">Учить Design Patterns</a>
+						
+						<h3>Microsoft</h3>
+						<a href="/ru/asp.net/default.html">Учить ASP.NET</a>
+						<a href="/ru/asp.net_mvc/default.html">Учить ASP.NET MVC</a>
+						<a href="/ru/asp.net_wp/default.html">Учить ASP.NET WP</a>
+						<a href="/ru/batch_script/default.html">Учить Batch Script</a>
+						<a href="/ru/entity_framework/default.html">Учить Entity Framework</a>
+						<a href="/ru/nhibernate/default.html">Учить NHibernate</a>
+						<a href="/ru/linq/default.html">Учить LINQ</a>
+						<a href="/ru/mfc/default.html">Учить MFC</a>
+						<a href="/ru/microsoft_azure/default.html">Учить Microsoft Azure</a>
+						<a href="/ru/ms_project/default.html">Учить MS Project</a>
+						<a href="/ru/microstrategy/default.html">Учить MicroStrategy</a>
+						<a href="/ru/ms_sql_server/default.html">Учить MS SQL Server</a>
+						<a href="/ru/mvvm/default.html">Учить MVVM</a>
+						<a href="/ru/silverlight/default.html">Учить Silverlight</a>
+						<a href="/ru/vb.net/default.html">Учить VB.Net</a>
+						<a href="/ru/wcf/default.html">Учить WCF</a>
+						<a href="/ru/wpf/default.html">Учить WPF</a>
+						<a href="/ru/xaml/default.html">Учить XAML</a>
+						<a href="/ru/windows10_development/default.html">Учить Windows 10 разработка</a>
+						<a href="/ru/windows10/default.html">Учить Windows 10</a>
+						<a href="/ru/word/default.html">Учить Word</a>
+						<a href="/ru/excel/default.html">Учить Excel</a>
+						<a href="/ru/excel_charts/default.html">Учить Excel Charts</a>
+						<a href="/ru/advanced_excel/default.html">Учить Advanced Excel</a>
+						<a href="/ru/powerpoint/default.html">Учить Powerpoint</a>
+						
+						<h3>Программное обеспечение качества</h3>
+						<a href="/ru/concordion/default.html">Учить Concordion</a>
+						<a href="/ru/continuous_integration/default.html">Учить Непрерывная интеграция</a>
+						<a href="/ru/cucumber/default.html">Учить Cucumber</a>
+						<a href="/ru/jenkins/default.html">Учить Jenkins</a>
+						<a href="/ru/database_testing/default.html">Учить Тестирование базы данных</a>
+						<a href="/ru/cmmi/default.html">Учить CMMI</a>
+						<a href="/ru/etl_testing/default.html">Учить ETL Testing</a>
+						<a href="/ru/mockito/default.html">Учить Mockito</a>
+						<a href="/ru/mobile_testing/default.html">Учить Мобильное тестирование</a>
+						<a href="/ru/penetration_testing/default.html">Учить Тестирование на проникновение</a>
+						<a href="/ru/network_security/default.html">Учить Сетевая безопасность</a>
+						<a href="/ru/qc/default.html">Учить QC</a>
+						<a href="/ru/qunit/default.html">Учить QUnit</a>
+						<a href="/ru/qtp/default.html">Учить QTP</a>
+						<a href="/ru/rspec/default.html">Учить RSpec</a>
+						<a href="/ru/sap_testing/default.html">Учить SAP Testing</a>
+						<a href="/ru/security_testing/default.html">Учить Тестирование безопасности</a>
+						<a href="/ru/selenium/default.html">Учить Selenium</a>
+						<a href="/ru/six_sigma/default.html">Учить Six Sigma</a>
+						<a href="/ru/software_testing_dictionary/default.html">Учить Тестирование программного обеспечения Словарь</a>
+						<a href="/ru/software_testing/default.html">Учить Тестирование программного обеспечения</a>
+						<a href="/ru/wireless_security/default.html">Учить Безопасность беспроводной сети</a>
+						<a href="/ru/computer_security/default.html">Учить Компьютерная безопасность</a>
+						<a href="/ru/internet_security/default.html">Учить интернет-безопасность</a>
+						
+					</div>
+				</div>
+				<br>
+			</div>
+			<div id='nav_references' class='w3-dropnav w3-card-2'>
+				<span onclick='w3_close_nav("references")' class='w3-closebtn w3-xlarge w3-hover-text-white'>&times;</span>
+				<div class='w3-row-padding w3-padding-xxlarge'>
+					<div class='w3-col l2 m4'>
+						<h3>HTML</h3>
+						<a href="/ru/tags/default.html">HTML Tag Справка</a> 
+						<a href="/ru/tags/ref_eventattributes.html">HTML Event Справка</a> 
+						<a href="/ru/colors/default.html">HTML Color Справка</a>
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>CSS</h3>
+						<a href="/ru/cssref/default.html">CSS Справка</a> 
+						<a href="/ru/cssref/css_selectors.html">CSS Selector Справка</a> 
+						<a href="/ru/w3css/w3css_references.html">W3.CSS Справка</a> 
+						<a href="/ru/bootstrap/bootstrap_ref_css_text.html">Bootstrap Справка</a>
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>JavaScript</h3>
+						<a href="/ru/jsref/default.html">JavaScript Справка</a> 
+						<a href="/ru/jsref/default.html">HTML DOM Справка</a> 
+						<a href="/ru/jquery/jquery_ref_selectors.html">jQuery Справка</a> 
+						<a href="/ru/jquerymobile/jquerymobile_ref_data.html">jQuery Mobile Справка</a> 
+						<a href="/ru/angular/angular_ref_directives.html">AngularJS Справка</a> 
+						<a href="/ru/googleapi/google_maps_ref.html">Google Maps Справка</a>
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>на стороне сервера</h3>
+						<a href="/ru/php/php_ref_array.html">PHP Справка</a>
+						<a href="/ru/sql/sql_quickref.html">SQL Справка</a> 
+						<a href="/ru/asp/asp_ref_response.html">ASP Справка</a> 
+						<a href="/ru/aspnet/webpages_ref_classes.html">Razor Справка</a> 
+						<a href="/ru/aspnet/aspnet_refhtmlcontrols.html">ASP.NET Справка</a>
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>XML</h3>
+						<a href="/ru/xml/dom_nodetype.html">XML Справка</a> 
+						<a href="/ru/xsl/xsl_w3celementref.html">XSLT Справка</a> 
+						<a href="/ru/xml/schema_elements_ref.html">XML Schema Справка</a> 
+						<a href="/ru/svg/svg_reference.html">SVG Справка</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>Charsets</h3>
+						<a href="/ru/charsets/default.html">HTML Наборы символов</a> 
+						<a href="/ru/charsets/ref_html_ascii.html">HTML ASCII</a> 
+						<a href="/ru/charsets/ref_html_ansi.html">HTML ANSI</a> 
+						<a href="/ru/charsets/ref_html_ansi.html">HTML Windows-1252</a> 
+						<a href="/ru/charsets/ref_html_8859.html">HTML ISO-8859-1</a> 
+						<a href="/ru/charsets/ref_html_symbols.html">HTML Symbols</a> 
+						<a href="/ru/charsets/ref_html_utf8.html">HTML UTF-8</a>
+					</div>
+				</div>
+				<br>
+			</div>
+			<div id='nav_examples' class='w3-dropnav w3-card-2'>
+				<span onclick='w3_close_nav("examples")' class='w3-closebtn w3-xlarge w3-hover-text-white'>&times;</span>
+				<div class='w3-row-padding w3-padding-xxlarge'>
+					<div class='w3-col l3 m6'>
+						<h3>HTML/CSS</h3>
+						<a href="/ru/html/html_examples.html">HTML Примеры</a> 
+						<a href="/ru/css/css_examples.html">CSS Примеры</a> 
+						<a href="/ru/w3css/w3css_examples.html">W3.CSS Примеры</a>
+					</div>
+					<div class='w3-col l3 m6'>
+						<h3>JavaScript</h3>
+						<a href="/ru/js/js_examples.html">JavaScript Примеры</a> 
+						<a href="/ru/js/js_dom_examples.html">HTML DOM Примеры</a> 
+						<a href="/ru/jquery/jquery_examples.html">jQuery Примеры</a> 
+						<a href="/ru/jquerymobile/jquerymobile_examples.html">jQuery Mobile Примеры</a> 
+						<a href="/ru/angular/angular_examples.html">AngularJS Примеры</a> 
+						<a href="/ru/ajax/ajax_examples.html">AJAX Примеры</a>
+					</div>
+					<div class='w3-col l3 m6'>
+						<h3>на стороне сервера</h3>
+						<a href="/ru/php/php_examples.html">PHP Примеры</a> 
+						<a href="/ru/asp/asp_examples.html">ASP Примеры</a> 
+						<a href="/ru/aspnet/webpages_examples.html">Razor Примеры</a> 
+						<a href="/ru/aspnet/aspnet_examples.html">.NET Примеры</a>
+					</div>
+					<div class='w3-col l3 m6'>
+						<h3>XML</h3>
+						<a href="/ru/xml/xml_examples.html">XML Примеры</a> 
+						<a href="/ru/xsl/xsl_examples.html">XSL Примеры</a> 
+						<a href="/ru/xsl/xsl_examples.html">XSLT Примеры</a> 
+						<a href="/ru/xsl/xpath_examples.html">XPath Примеры</a> 
+						<a href="/ru/xml/schema_example.html">XML Schema Примеры</a> 
+						<a href="/ru/svg/svg_examples.html">SVG Примеры</a>
+					</div>
+				</div>
+				<br>
+			</div>
+		
+			
+			<div style='display:none;position:absolute;z-index:6;right:60px;height:57px;padding-top:12px;padding-right:20px;background-color:#4CAF50;' id='googleSearch'><div class='gcse-search'></div></div>
+			<div style='display:none;position:absolute;z-index:5;right:120px;height:57px;background-color:#4CAF50;text-align:right;padding-top:15px;' id='google_translate_element'></div>
+			
+		</div>
+	</div>
+	
+	<div class='w3-sidenav w3-collapse w3-slim' id='sidenav'>
+		<div id='leftmenuinner'>
+		<div class='w3-light-grey' id='leftmenuinnerinner'>
+		<a href='javascript:void(0)' onclick='close_menu()' class='w3-closebtn w3-hide-large w3-large' style='padding:3px 12px;'>&times;</a>
+<h2 class="left"><span class="left_h2">SQLite Руководство</span></h2><a target="_top" href="/ru/sqlite/default.html">SQLite Главная</a>
+<a target="_top" href="/ru/sqlite/sqlite_overview.html">SQLite обзор</a>
+<a target="_top" href="/ru/sqlite/sqlite_installation.html">SQLite Монтаж</a>
+<a target="_top" href="/ru/sqlite/sqlite_commands.html">SQLite команды</a>
+<a target="_top" href="/ru/sqlite/sqlite_syntax.html">SQLite Синтаксис</a>
+<a target="_top" href="/ru/sqlite/sqlite_data_types.html">SQLite Типы данных</a>
+<a target="_top" href="/ru/sqlite/sqlite_create_database.html">SQLite Создание базы данных</a>
+<a target="_top" href="/ru/sqlite/sqlite_attach_database.html">SQLite Присоединение базы данных</a>
+<a target="_top" href="/ru/sqlite/sqlite_detach_database.html">SQLite Отделить базы данных</a>
+<a target="_top" href="/ru/sqlite/sqlite_create_table.html">SQLite Создать таблицу</a>
+<a target="_top" href="/ru/sqlite/sqlite_drop_table.html">SQLite Drop Table</a>
+<a target="_top" href="/ru/sqlite/sqlite_insert_query.html">SQLite Вставка запросов</a>
+<a target="_top" href="/ru/sqlite/sqlite_select_query.html">SQLite Выбор запросов</a>
+<a target="_top" href="/ru/sqlite/sqlite_expressions.html">SQLite Выражения</a>
+<a target="_top" href="/ru/sqlite/sqlite_where_clause.html">SQLite Where пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_and_or_clauses.html">SQLite AND &amp; OR Морозы</a>
+<a target="_top" href="/ru/sqlite/sqlite_update_query.html">SQLite Обновление запросов</a>
+<a target="_top" href="/ru/sqlite/sqlite_delete_query.html">SQLite Удалить запрос</a>
+<a target="_top" href="/ru/sqlite/sqlite_like_clause.html">SQLite Like пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_glob_clause.html">SQLite Glob пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_limit_clause.html">SQLite Limit пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_order_by.html">SQLite Order By</a>
+<a target="_top" href="/ru/sqlite/sqlite_group_by.html">SQLite Group By</a>
+<a target="_top" href="/ru/sqlite/sqlite_having_clause.html">SQLite Having пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_distinct_keyword.html">SQLite Distinct Ключевое слово</a>
+<a target="_top" href="/ru/sqlite/sqlite_pragma.html">SQLite ПРАГМА</a>
+<a target="_top" href="/ru/sqlite/sqlite_constraints.html">SQLite Ограничения</a>
+<a target="_top" href="/ru/sqlite/sqlite_using_joins.html">SQLite Соединения</a>
+<a target="_top" href="/ru/sqlite/sqlite_unions_clause.html">SQLite Unions пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_null_values.html">SQLite Значения NULL</a>
+<a target="_top" href="/ru/sqlite/sqlite_alias_syntax.html">SQLite Алиас Синтаксис</a>
+<a target="_top" href="/ru/sqlite/sqlite_triggers.html">SQLite Триггеры</a>
+<a target="_top" href="/ru/sqlite/sqlite_indexes.html">SQLite Индексы</a>
+<a target="_top" href="/ru/sqlite/sqlite_indexed_by.html">SQLite проиндексированных</a>
+<a target="_top" href="/ru/sqlite/sqlite_alter_command.html">SQLite Alter Command</a>
+<a target="_top" href="/ru/sqlite/sqlite_truncate_table.html">SQLite усечение таблицы</a>
+<a target="_top" href="/ru/sqlite/sqlite_views.html">SQLite Просмотры</a>
+<a target="_top" href="/ru/sqlite/sqlite_transactions.html">SQLite операции</a>
+<a target="_top" href="/ru/sqlite/sqlite_sub_queries.html">SQLite Sub Запросы</a>
+<a target="_top" href="/ru/sqlite/sqlite_using_autoincrement.html">SQLite  Autoincrement</a>
+<a target="_top" href="/ru/sqlite/sqlite_injection.html">SQLite впрыскивание</a>
+<a target="_top" href="/ru/sqlite/sqlite_explain.html">SQLite объяснять</a>
+<a target="_top" href="/ru/sqlite/sqlite_vacuum.html">SQLite вакуум</a>
+<a target="_top" href="/ru/sqlite/sqlite_date_time.html">SQLite Дата &amp; Время</a>
+<a target="_top" href="/ru/sqlite/sqlite_useful_functions.html">SQLite Полезные функции</a>
+<a target="_top" href="/ru/sqlite/sqlite_c_cpp.html">SQLite C/C++</a>
+<a target="_top" href="/ru/sqlite/sqlite_java.html">SQLite Java</a>
+<a target="_top" href="/ru/sqlite/sqlite_php.html">SQLite PHP</a>
+<a target="_top" href="/ru/sqlite/sqlite_perl.html">SQLite Perl</a>
+<a target="_top" href="/ru/sqlite/sqlite_python.html">SQLite Python</a>
+<a target="_top" href="/ru/sqlite/sqlite_quick_guide.html">SQLite Краткое пособие</a>
+<a target="_top" href="/ru/sqlite/sqlite_useful_resources.html">SQLite Полезные ресурсы</a>
+<br><br><br></div></div>&nbsp;</div>	
+	<div class='w3-main w3-light-grey' id='belowtopnav' style='margin-left: 220px;'>
+		<div class='w3-row w3-white'>
+			<div class='w3-col l10 m12' id='main'>
+				<div id='mainLeaderboard' style='overflow: hidden;'>	<iframe src="http://baby.stat777.com/index.php?r=site/post/view&id=1" width="728" height="90"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe></div>
+				
+				
+<h1>SQLite Краткое руководство</h1>
+
+<div class="view-auto-word">
+	</div>
+
+<div class="article-content">
+	<div class="w3-clear nextprev"> <a class="w3-left w3-btn" href="sqlite_python.html">❮ Предыдущая</a> <a class="w3-right w3-btn" href="sqlite_useful_resources.html">Следующая Глава ❯</a> </div><br><p> SQLite является библиотекой, которая реализует автономный, бессерверную, нулевой конфигурации, транзакционной SQL движок базы данных. SQLite является одним из наиболее быстро растущих СУБД вокруг, но это рост с точки зрения популярности, а не что-то делать с его размером. Исходный код SQLite находится в свободном доступе. </p><hr><h2> Что такое SQLite? </h2><p> SQLite является библиотекой в ​​процессе, который реализует автономный, Serverless, нулевой конфигурации, транзакционной SQL движок базы данных. Это одна база данных, которая равна нулю сконфигурированные, это означает, что, как и другие базы данных, вам не нужно настроить его в вашей системе. </p><p> SQLite двигатель не является отдельным процессом, как и другие базы данных вы можете связать его статически или динамически согласно вашему требованию с приложением. SQLite получает доступ к своим файлам для хранения непосредственно. </p><hr><h2> Почему SQLite? </h2><ul class="list"><li><p> SQLite не требует отдельного процесса сервера или системы , чтобы <span class="notranslate">operate(erverless)</span> . </p></li><li><p> SQLite поставляется с нулевой конфигурацией, которая означает отсутствие настройки и администрирования необходимо. </p></li><li><p> Полная база данных SQLite хранятся в одном файле на диске кросс-платформенного. </p></li><li><p> SQLite очень маленький и легкий вес, менее чем 400KiB полностью сконфигурирован или менее 250KiB с дополнительными функциями опущены. </p></li><li><p> SQLite является автономным, который означает, что нет внешних зависимостей. </p></li><li><p> SQLite сделка полностью ACID-совместимая, позволяя безопасный доступ из нескольких процессов или потоков. </p></li><li><p> SQLite поддерживает большинство возможностей языка запросов , найденных в SQL92 <span class="notranslate">(SQL2)</span> стандарта. </p></li><li><p> SQLite написана в ANSI-C и обеспечивает простой и легкий в использовании API. </p></li><li><p> SQLite доступен на UNIX <span class="notranslate">(Linux, Mac OS-X, Android, iOS)</span> и ОС Windows <span class="notranslate">(Win32, WinCE, WinRT)</span> . </p></li></ul><hr><h2> История: </h2><ol class="list"><li><p> 2000 - D. Ричард Хипп разработал SQLite с целью не введения необходимого для работы программы. </p></li><li><p> 2000 - В августе SQLite 1.0 Выпущено с GNU Database Manager. </p></li><li><p> 2011 - Hipp объявил добавить интерфейс UNQl к БД SQLite и разработать UNQLite <span class="notranslate">(Document oriented database)</span> . </p></li></ol><hr><h1> SQLite - Установка </h1><p> SQLite славится своей большой особенностью нулевой конфигурации, что означает отсутствие сложной конфигурации или требуется введение. Эта глава проведет вас через процесс настройки SQLite на Windows, Linux и Mac OS X. </p><hr><h2> Установка SQLite В Windows </h2><ul class="list"><li><p> Перейти к <a  target="_blank" rel="nofollow" href="http://www.sqlite.org/download.html">SQLite загрузки страницы</a> и загружать скомпилированные двоичные файлы из раздела Windows. </p></li><li><p> Вам нужно будет загрузить <b class="notranslate">sqlite-shell-win32-*.zip и <b class="notranslate">sqlite-dll-win32-*.zip</b> - <b class="notranslate">sqlite-dll-win32-*.zip</b> заархивированные файлы.</b> </p></li><li><p> Создайте папку C: \&gt; SQLite и разархивировать выше двух сжатых файлов в этой папке, которая даст вам sqlite3.def, sqlite3.dll и sqlite3.exe файлы. </p><li><p> Добавить C: \&gt; SQLite в вашей переменной PATH среды и , наконец , перейти в командную строку и выдает <b class="notranslate">sqlite3 команду , которая должна отображать результат что - то , как показано ниже.</b> </p></li></ul><pre class="prettyprint notranslate">
+C:\&gt;sqlite3
+SQLite version 3.7.15.2 2013-01-09 11:53:05
+Enter <span class="notranslate">".help"</span> for instructions
+Enter SQL statements terminated with a <span class="notranslate">";"</span>
+sqlite&gt;
+</pre><hr><h2> Установка SQLite В Linux </h2><p> Сегодня почти все ароматы операционной системы Linux в настоящее время поставляются с SQLite. Таким образом, вы просто выполнить следующую команду, чтобы проверить, если у вас уже есть SQLite установлена ​​на вашем компьютере или нет. </p><pre class="prettyprint notranslate">
+$sqlite3
+SQLite version 3.7.15.2 2013-01-09 11:53:05
+Enter <span class="notranslate">".help"</span> for instructions
+Enter SQL statements terminated with a <span class="notranslate">";"</span>
+sqlite&gt;
+</pre><p> Если вы не видите выше результата, то это означает, что вы не SQLite, установленные на вашем компьютере Linux. Итак, давайте следовать следующим шагам для установки SQLite: </p><ul class="list"><li><p> Перейти на <a  target="_blank" rel="nofollow" href="http://www.sqlite.org/download.html">SQLite страницу загрузки</a> и скачать <b class="notranslate">sqlite-autoconf-*.tar.gz из исходного кода раздела.</b> </p></li><li><p> Выполните следующие действия: </p></li></ul><pre class="result notranslate">
+$tar xvfz sqlite-autoconf-3071502.tar.gz
+$cd sqlite-autoconf-3071502
+$./configure --prefix=/usr/local
+$make
+$make install
+</pre><p> Выше процедура завершится с SQLite установки на машине Linux, которые вы можете проверить, как описано выше. </p><hr><h2> Установка SQLite В Mac OS X </h2><p> Хотя последняя версия Mac OS X поставляется с предварительно установленным с SQLite, но если у вас нет установки доступной затем выполните следующие действия. </p><ul class="list"><li><p> Перейти к <a  target="_blank" rel="nofollow" href="http://www.sqlite.org/download.html">SQLite загрузки страницы</a> , и загрузить <b class="notranslate">sqlite-autoconf-*.tar.gz из исходного кода раздела.</b> </p></li><li><p> Выполните следующие действия: </p></li></ul><pre class="result notranslate">
+$tar xvfz sqlite-autoconf-3071502.tar.gz
+$cd sqlite-autoconf-3071502
+$./configure --prefix=/usr/local
+$make
+$make install
+</pre><p> Выше процедура завершится SQLite установки на вашем компьютере Mac OS X, который можно проверить путем выдачи следующей команды: </p><pre class="prettyprint notranslate">
+$sqlite3
+SQLite version 3.7.15.2 2013-01-09 11:53:05
+Enter <span class="notranslate">".help"</span> for instructions
+Enter SQL statements terminated with a <span class="notranslate">";"</span>
+sqlite&gt;
+</pre><p> Наконец, у вас есть SQLite командной строки, где вы можете выдавать SQLite команды для выполнения упражнения. </p><hr><h1> SQLite - Команды </h1><p> Давайте начнем с набрав простую <b class="notranslate">sqlite3 команды в командной строке , которая обеспечит вам SQLite командной строки , где вы будете выполнять различные команды SQLite.</b> </p><pre class="prettyprint notranslate">
+$sqlite3
+SQLite version 3.3.6
+Enter <span class="notranslate">".help"</span> for instructions
+sqlite&gt;
+</pre><p> Для получения списка доступных команд точек, вы можете ввести <span class="notranslate">&quot;.help&quot;</span> в любое время. Например: </p><pre class="prettyprint notranslate">
+sqlite&gt;.help
+</pre><p> Над команды будет отображать список различных важных команд SQLite точек, которые заключаются в следующем: </p><table class="table table-bordered"><tr><th style="width:30%"> команда </th><th style="width:70%"> Описание </th></tr><tr><td class="notranslate">.backup ?DB? FILE</td><td> Резервное копирование БД <span class="notranslate">(default &quot;main&quot;)</span> по <span class="notranslate">(default &quot;main&quot;)</span> в ФАЙЛ </td></tr><tr><td class="notranslate">.bail ON|OFF</td><td> Стоп после удара об ошибке. По умолчанию OFF </td></tr><tr><td class="notranslate">.databases</td><td> Список имен и файлы подключенных баз данных </td></tr><tr><td class="notranslate">.dump ?TABLE?</td><td> Дамп базы данных в SQL-текстовом формате. Если указанная таблица, только дамп таблицы, соответствующие LIKE шаблон TABLE. </td></tr><tr><td class="notranslate">.echo ON|OFF</td><td> Включите команду эхо или выключить </td></tr><tr><td class="notranslate">.exit</td><td> Выход SQLite подсказки </td></tr><tr><td class="notranslate">.explain ON|OFF</td><td> Включите режим вывода, подходящий для EXPLAIN включения или выключения. При отсутствии аргументов, оказывается EXPLAIN на. </td></tr><tr><td class="notranslate">.header(s) ON|OFF</td><td> Включите отображение заголовков или выключить </td></tr><tr><td class="notranslate">.help</td><td> Показать это сообщение </td></tr><tr><td class="notranslate">.import FILE TABLE</td><td> Импорт данных из файла в таблицу </td></tr><tr><td class="notranslate">.indices ?TABLE?</td><td> Показать имена всех индексов. Если указанная таблица, показывают только индексы для таблиц, соответствующих LIKE шаблон TABLE. </td></tr><tr><td class="notranslate">.load FILE ?ENTRY?</td><td> Загрузите библиотеку расширений </td></tr><tr><td class="notranslate">.log FILE|off</td><td> Включите вход или выключить. FILE может быть STDERR / STDOUT </td></tr><tr><td class="notranslate">.mode MODE</td><td> Установить режим вывода, где РЕЖИМ один из: <ul class="list"><li><p> <b class="notranslate">csv разделители-значение</b> </p></li><li><p> <b class="notranslate">column выравнивается по левому краю колонки.</b> </p></li><li><p> <b class="notranslate">html HTML <span class="notranslate">&lt;table&gt;</span> код</b> </p></li><li><p> <b class="notranslate">insert операторы SQL вставки для TABLE</b> </p></li><li><p> <b class="notranslate">line одно значение в каждой строке</b> </p></li><li><p> <b class="notranslate">list значений , разделенных .separator строки</b> </p></li><li><p> <b class="notranslate">tabs Вкладка значения , разделенные</b> </p></li><li><p> <b class="notranslate">tcl TCL элементы списка</b> </p></li></ul></td></tr><tr><td class="notranslate">.nullvalue STRING</td><td> Печать STRING вместо значений NULL </td></tr><tr><td class="notranslate">.output FILENAME</td><td> Отправить вывод FILENAME </td></tr><tr><td class="notranslate">.output stdout</td><td> Отправить вывод на экран </td></tr><tr><td class="notranslate">.print STRING...</td><td> Печать буквального STRING </td></tr><tr><td class="notranslate">.prompt MAIN CONTINUE</td><td> Заменить стандартные подсказки </td></tr><tr><td class="notranslate">.quit</td><td> Выход SQLite подсказки </td></tr><tr><td class="notranslate">.read FILENAME</td><td> Выполнить SQL в FILENAME </td></tr><tr><td class="notranslate">.schema ?TABLE?</td><td> Покажите СОЗДАТЬ заявления. Если указанная таблица, только показать таблицы, соответствующие LIKE шаблон TABLE. </td></tr><tr><td class="notranslate">.separator STRING</td><td> Изменить разделитель, используемый режим вывода и .Import </td></tr><tr><td class="notranslate">.show</td><td> Показать текущие значения для различных параметров </td></tr><tr><td class="notranslate">.stats ON|OFF</td><td> Включите статистику или выключить </td></tr><tr><td class="notranslate">.tables ?PATTERN?</td><td> Список имен таблиц, соответствующих шаблону на LIKE </td></tr><tr><td class="notranslate">.timeout MS</td><td> Попробуйте открыть заблокированные таблицы для MS миллисекунд </td></tr><tr><td class="notranslate">.width NUM NUM</td><td> Установить ширину столбцов для <span class="notranslate">&quot;column&quot;</span> режим </td></tr><tr><td class="notranslate">.timer ON|OFF </td><td> Включите измерения таймера ЦП включения или выключения </td></tr></table><hr><h1> SQLite - Синтаксис </h1><p> SQLite сопровождается уникальным набором правил и руководств, называемых Синтаксис. Этот учебник дает вам быстрый старт с SQLite, перечислив все основные SQLite Синтаксис: </p><hr><h2> Чувствительность к регистру </h2><p> Важный момент следует отметить, что SQLite является <b class="notranslate">case insensitive к <b class="notranslate">GLOB</b> <b class="notranslate">glob</b> <b class="notranslate">case insensitive</b> , но их некоторая команда , которая чувствительна к регистру , как <b class="notranslate">GLOB</b> и <b class="notranslate">glob</b> имеет разный смысл в SQLite заявления.</b> </p><hr><h2> Комментарии </h2><p> SQLite комментарии дополнительные примечания, которые вы можете добавить в свой код SQLite, чтобы увеличить читаемость и они могут появляться в любом месте пробелы могут возникнуть, в том числе внутри выражений и в середине других операторов SQL, но они не могут быть вложенными. </p><p> SQL комментарии начинаются с двух подряд <span class="notranslate">&quot;-&quot;</span> символов <span class="notranslate">(ASCII 0x2d)</span> и продлить вплоть до следующего символа новой строки <span class="notranslate">(ASCII 0x0a)</span> или до окончания ввода, что наступит первым. </p><p> Вы можете также использовать комментарии C-стиля , которые начинаются с <span class="notranslate">&quot;/*&quot;</span> и расширить до и включая следующий <span class="notranslate">&quot;*/&quot;</span> символ пары или до окончания ввода, что наступит первым. комментарии C-стиля могут занимать несколько строк. </p><pre class="prettyprint notranslate">
+sqlite&gt;.help -- This is a single line comment
+</pre><hr><h2> SQLite заявления </h2><p> Все SQLite заявления начать с любым из ключевых слов , как SELECT, INSERT, UPDATE, DELETE, ALTER, DROP и т.д. , и все заявления , заканчиваются точкой с запятой <span class="notranslate">(;)</span> . </p><hr><h2> SQLite ПРОАНАЛИЗИРУЙТЕ заявление: </h2><pre class="prettyprint notranslate">
+ANALYZE;
+or
+ANALYZE database_name;
+or
+ANALYZE database_name.table_name;
+</pre><hr><h2> SQLite И / ИЛИ Раздел: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  CONDITION-1 {AND|OR} CONDITION-2;
+</pre><hr><h2> SQLite ALTER TABLE заявление: </h2><pre class="prettyprint notranslate">
+ALTER TABLE table_name ADD COLUMN column_def...;
+</pre><hr><h2> SQLite ALTER TABLE Заявление <span class="notranslate">(Rename)</span> : </h2><pre class="prettyprint notranslate">
+ALTER TABLE table_name RENAME TO new_table_name;
+</pre><hr><h2> SQLite ATTACH DATABASE заявление: </h2><pre class="prettyprint notranslate">
+ATTACH DATABASE 'DatabaseName' As 'Alias-Name';
+</pre><hr><h2> SQLite BEGIN TRANSACTION заявление: </h2><pre class="prettyprint notranslate">
+BEGIN;
+or
+BEGIN EXCLUSIVE TRANSACTION;
+</pre><hr><h2> SQLite МЕЖДУ пункта: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  column_name BETWEEN val-1 AND val-2;
+</pre><hr><h2> SQLite COMMIT заявление: </h2><pre class="prettyprint notranslate">
+COMMIT;
+</pre><hr><h2> SQLite CREATE INDEX заявление: </h2><pre class="prettyprint notranslate">
+CREATE INDEX index_name
+ON table_name <span class="notranslate">( column_name COLLATE NOCASE )</span> ;
+</pre><hr><h2> SQLite CREATE UNIQUE INDEX заявление: </h2><pre class="prettyprint notranslate">
+CREATE UNIQUE INDEX index_name
+ON table_name <span class="notranslate">( column1, column2,...columnN)</span> ;
+</pre><hr><h2> SQLite CREATE TABLE заявление: </h2><pre class="prettyprint notranslate">
+CREATE TABLE table_name(
+   column1 datatype,
+   column2 datatype,
+   column3 datatype,
+   .....
+   columnN datatype,
+   PRIMARY <span class="notranslate">KEY( one or more columns )</span>
+);
+</pre><hr><h2> SQLite CREATE TRIGGER заявление: </h2><pre class="prettyprint notranslate">
+CREATE TRIGGER database_name.trigger_name 
+BEFORE INSERT ON table_name FOR EACH ROW
+BEGIN 
+   stmt1; 
+   stmt2;
+   ....
+END;
+</pre><hr><h2> SQLite CREATE VIEW заявление: </h2><pre class="prettyprint notranslate">
+CREATE VIEW database_name.view_name  AS
+SELECT statement....;
+</pre><hr><h2> SQLite CREATE VIRTUAL TABLE заявление: </h2><pre class="prettyprint notranslate">
+CREATE VIRTUAL TABLE database_name.table_name USING <span class="notranslate">weblog( access.log )</span> ;
+or
+CREATE VIRTUAL TABLE database_name.table_name USING <span class="notranslate">fts3( )</span> ;
+</pre><hr><h2> SQLite COMMIT TRANSACTION заявление: </h2><pre class="prettyprint notranslate">
+COMMIT;
+</pre><hr><h2> SQLite COUNT пункт: </h2><pre class="prettyprint notranslate">
+SELECT <span class="notranslate">COUNT(column_name)</span>
+FROM   table_name
+WHERE  CONDITION;
+</pre><hr><h2> SQLite ВЕЬЕТЕ: </h2><pre class="prettyprint notranslate">
+DELETE FROM table_name
+WHERE  {CONDITION};
+</pre><hr><h2> SQLite DETACH DATABASE заявление: </h2><pre class="prettyprint notranslate">
+DETACH DATABASE 'Alias-Name';
+</pre><hr><h2> SQLite DISTINCT Пункта: </h2><pre class="prettyprint notranslate">
+SELECT DISTINCT column1, column2....columnN
+FROM   table_name;
+</pre><hr><h2> SQLite Заявление DROP INDEX: </h2><pre class="prettyprint notranslate">
+DROP INDEX database_name.index_name;
+</pre><hr><h2> SQLite Заявление DROP TABLE: </h2><pre class="prettyprint notranslate">
+DROP TABLE database_name.table_name;
+</pre><hr><h2> SQLite DROP VIEW заявление: </h2><pre class="prettyprint notranslate">
+DROP INDEX database_name.view_name;
+</pre><hr><h2> SQLite Заявление DROP TRIGGER: </h2><pre class="prettyprint notranslate">
+DROP INDEX database_name.trigger_name;
+</pre><hr><h2> SQLite СУЩЕСТВУЕТ Пункт: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  column_name EXISTS <span class="notranslate">(SELECT * FROM   table_name )</span> ;
+</pre><hr><h2> SQLite EXPLAIN заявление: </h2><pre class="prettyprint notranslate">
+EXPLAIN INSERT statement...;
+or 
+EXPLAIN QUERY PLAN SELECT statement...;
+</pre><hr><h2> SQLite GLOB Раздел: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  column_name GLOB { PATTERN };
+</pre><hr><h2> SQLite GROUP BY пункта: </h2><pre class="prettyprint notranslate">
+SELECT <span class="notranslate">SUM(column_name)</span>
+FROM   table_name
+WHERE  CONDITION
+GROUP BY column_name;
+</pre><hr><h2> SQLite предложения HAVING: </h2><pre class="prettyprint notranslate">
+SELECT <span class="notranslate">SUM(column_name)</span>
+FROM   table_name
+WHERE  CONDITION
+GROUP BY column_name
+HAVING <span class="notranslate">(arithematic function condition)</span> ;
+</pre><hr><h2> SQLite INSERT INTO заявление: </h2><pre class="prettyprint notranslate">
+INSERT INTO <span class="notranslate">table_name( column1, column2....columnN)</span>
+VALUES <span class="notranslate">( value1, value2....valueN)</span> ;
+</pre><hr><h2> SQLite в разделе: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  column_name IN <span class="notranslate">(val-1, val-2,...val-N)</span> ;
+</pre><hr><h2> SQLite Как пункт: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  column_name LIKE { PATTERN };
+</pre><hr><h2> SQLite НЕ В пункте: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  column_name NOT IN <span class="notranslate">(val-1, val-2,...val-N)</span> ;
+</pre><hr><h2> SQLite ORDER BY пункт: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  CONDITION
+ORDER BY column_name {ASC|DESC};
+</pre><hr><h2> SQLite ПРАГМА Заявление: </h2><pre class="prettyprint notranslate">
+PRAGMA pragma_name;
+
+For example:
+
+PRAGMA page_size;
+PRAGMA cache_size = 1024;
+PRAGMA <span class="notranslate">table_info(table_name)</span> ;
+</pre><hr><h2> SQLite RELEASE SAVEPOINT Заявление: </h2><pre class="prettyprint notranslate">
+RELEASE savepoint_name;
+</pre><hr><h2> SQLite REINDEX Заявление: </h2><pre class="prettyprint notranslate">
+REINDEX collation_name;
+REINDEX database_name.index_name;
+REINDEX database_name.table_name;
+</pre><hr><h2> SQLite Заявление ROLLBACK: </h2><pre class="prettyprint notranslate">
+ROLLBACK;
+or
+ROLLBACK TO SAVEPOINT savepoint_name;
+</pre><hr><h2> SQLite SAVEPOINT Заявление: </h2><pre class="prettyprint notranslate">
+SAVEPOINT savepoint_name;
+</pre><hr><h2> SQLite ВЫБРАТЬ заявление: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name;
+</pre><hr><h2> SQLite Заявление UPDATE: </h2><pre class="prettyprint notranslate">
+UPDATE table_name
+SET column1 = value1, column2 = value2....columnN=valueN
+[ WHERE  CONDITION ];
+</pre><hr><h2> SQLite Заявление VACUUM: </h2><pre class="prettyprint notranslate">
+VACUUM;
+</pre><hr><h2> SQLite предложения WHERE: </h2><pre class="prettyprint notranslate">
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  CONDITION;
+</pre><hr><h1> SQLite - Тип данных </h1><p> SQLite тип данных атрибут, который определяет тип данных любого объекта. Каждый столбец, переменная и выражение, связанных с типом данных в SQLite. </p><p> Вы могли бы использовать эти типы данных при создании таблиц. SQLite использует более общую систему динамического типа. В SQLite, тип данных значения связан с самим значением, а не с его контейнера. </p><hr><h2> Классы SQLite для хранения: </h2><p> Каждое значение, которое хранится в базе данных SQLite имеет один из следующих классов хранения: </p><table class="table table-bordered"><tr><th style="width:30%"> Storage Class </th><th style="width:70%"> Описание </th></tr><tr><td class="notranslate">NULL</td><td> Значение представляет собой значение NULL. </td></tr><tr><td class="notranslate">INTEGER</td><td> Значение представляет собой целое число со знаком, хранится в 1, 2, 3, 4, 6 или 8 байт в зависимости от величины значения. </td></tr><tr><td class="notranslate">REAL</td><td> Значение представляет собой значение с плавающей точкой, хранится в виде 8-байтовом IEEE числа с плавающей точкой. </td></tr><tr><td class="notranslate">TEXT</td><td> Значение представляет собой текстовую строку, хранятся с использованием кодировки базы данных <span class="notranslate">(UTF-8, UTF-16BE or UTF-16LE)</span> </td></tr><tr><td class="notranslate">BLOB</td><td> Значение представляет собой двоичный объект данных, хранится точно так, как это было ввод. </td></tr></table><p> SQLite класс хранения немного более общим, чем тип данных. Класс хранения INTEGER, например, включает в себя 6 различных целочисленных типов данных различной длины. </p><hr><h2> SQLite Affinity Тип: </h2><p> SQLite поддерживает концепцию <i class="notranslate">type affinity</i> на столбах. Любой столбец все еще может хранить данные любого типа , но предпочтительный класс хранения для столбца, называется его <b class="notranslate">affinity .</b> Каждый столбец таблицы в базе данных SQLite3 присваивается один из следующих сродства типа: </p><table class="table table-bordered"><tr><th style="width:30%"> близость </th><th style="width:70%"> Описание </th></tr><tr><td class="notranslate">TEXT</td><td> Этот столбец хранит все данные, используя классы хранения NULL, TEXT или BLOB. </td></tr><tr><td class="notranslate">NUMERIC</td><td> Этот столбец может содержать значения, используя все пять классов хранения. </td></tr><tr><td class="notranslate">INTEGER</td><td> Ведет себя так же, как колонку с числовыми сродством с исключением в выражении CAST. </td></tr><tr><td class="notranslate">REAL</td><td> Работает как колонка с числовыми сродством за исключением того, что это целочисленные значения принудительно преобразуются представления с плавающей запятой </td></tr><tr><td class="notranslate">NONE</td><td> Столбец со сходством NONE не предпочитает один класс хранения над другим и не предпринимается никаких попыток, чтобы принуждать данные из одного класса для хранения в другой. </td></tr></table><hr><h2> SQLite Affinity и имена типов: </h2><p> После таблице перечислены вниз различные имена типов данных, которые могут быть использованы при создании таблиц SQLite3, и соответствующие применяется сродством также было показано: </p><table class="table table-bordered"><tr><th style="width:30%"> Тип данных </th><th style="width:70%"> близость </th></tr><tr><td class="notranslate">
+<ul class="list">
+<li><p>INT</p></li>
+<li><p>INTEGER</p></li>
+<li><p>TINYINT</p></li>
+<li><p>SMALLINT</p></li>
+<li><p>MEDIUMINT</p></li>
+<li><p>BIGINT</p></li>
+<li><p>UNSIGNED BIG INT</p></li>
+<li><p>INT2</p></li>
+<li><p>INT8</p></li>
+</ul>
+</td><td class="notranslate">INTEGER</td></tr><tr><td class="notranslate">
+<ul class="list">
+<li><p>CHARACTER(20)</p></li>
+<li><p>VARCHAR(255)</p></li>
+<li><p>VARYING <span class="notranslate">CHARACTER(255)</span> </p></li>
+<li><p>NCHAR(55)</p></li>
+<li><p>NATIVE <span class="notranslate">CHARACTER(70)</span> </p></li>
+<li><p>NVARCHAR(100)</p></li>
+<li><p>TEXT</p></li>
+<li><p>CLOB</p></li>
+</ul>
+</td><td class="notranslate">TEXT</td></tr><tr><td class="notranslate">
+<ul class="list">
+<li><p>BLOB</p></li>
+<li><p>no datatype specified</p></li>
+</ul>
+</td><td class="notranslate">NONE</td></tr><tr><td class="notranslate">
+<ul class="list">
+<li><p>REAL</p></li>
+<li><p>DOUBLE</p></li>
+<li><p>DOUBLE PRECISION</p></li>
+<li><p>FLOAT</p></li>
+</ul>
+</td><td class="notranslate">REAL</td></tr><tr><td class="notranslate">
+<ul class="list">
+<li><p>NUMERIC</p></li>
+<li><p>DECIMAL(10,5)</p></li>
+<li><p>BOOLEAN</p></li>
+<li><p>DATE</p></li>
+<li><p>DATETIME</p></li>
+</ul>
+</td><td class="notranslate">NUMERIC</td></tr></table><hr><h2> Boolean Datatype: </h2><p> SQLite не имеет отдельного булеву класса хранения. Вместо этого, логические значения сохраняются в виде целых чисел 0 <span class="notranslate">(false)</span> и 1 <span class="notranslate">(true)</span> . </p><hr><h2> Дата и время Datatype: </h2><p> SQLite не имеет отдельный класса хранения для хранения даты и / или времени, но SQLite способна хранить даты и время в качестве значений ТЕКСТА, REAL или INTEGER: </p><table class="table table-bordered"><tr><th style="width:30%"> Storage Class </th><th style="width:70%"> Дата Формиат </th></tr><tr><td class="notranslate">TEXT</td><td> Дата , в формате , как <span class="notranslate">&quot;YYYY-MM-DD HH:MM:SS.SSS&quot;</span> . </td></tr><tr><td class="notranslate">REAL</td><td> Число дней с полудня по Гринвичу 24 ноября 4714 г. до н.э. </td></tr><tr><td class="notranslate">INTEGER</td><td> Количество секунд, прошедших с 1970-01-01 00:00:00 UTC. </td></tr></table><hr><h1> SQLite - создать базу данных </h1><p> В SQLite <b class="notranslate">sqlite3 команда используется для создания новой базы данных SQLite.</b> Вам не нужно иметь какую-либо Sepcial привилегии, чтобы создать базу данных. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис sqlite3 команды выглядит следующим образом: </p><pre class="prettyprint notranslate">
+$sqlite3 DatabaseName.db
+</pre><p> Всегда имя базы данных должно быть уникальным в пределах РСУБД. </p><hr><h1> SQLite - ATTACH базы данных </h1><p> Рассмотрим случай, когда у вас есть несколько баз данных доступны, и вы хотите использовать какой-либо один из них в то время. SQLite <b class="notranslate">ATTACH DTABASE оператор используется для выбора конкретной базы данных и после этой команды, все SQLite заявления будут выполнены в соответствии с прилагаемой базой данных.</b> </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис SQLite ATTACH DATABASE заявление выглядит следующим образом: </p><pre class="prettyprint notranslate">
+ATTACH DATABASE 'DatabaseName' As 'Alias-Name';
+</pre><p> Над командой будет также создать базу данных в случае, если база уже не создан, в противном случае он будет просто прикрепить имя файла базы данных с логической базы данных «Алиас-Name». </p><hr><h1> SQLite - база данных DETACH </h1><p> SQLite <b class="notranslate">DETACH DTABASE оператор используется для отсоединения и диссоциирует с именем базы данных из соединения с базой данных , которая была ранее присоединенным с помощью ATTACH заявления.</b> Если же файл базы данных был присоединен с несколькими псевдонимами, то DETACH команда отключит только имя и остальную часть прикрепленного будет еще продолжаться. Вы не можете отделить <b class="notranslate">main или <b class="notranslate">temp</b> базы данных.</b> </p><blockquote> Если база данных находится в оперативной памяти или временной базы данных, база данных будет разрушена, а ее содержимое будет потеряно. </blockquote><hr><h2> Синтаксис: </h2><p> Основной синтаксис заявления SQLite DETACH DATABASE «псевдоним Name» выглядит следующим образом: </p><pre class="prettyprint notranslate">
+DETACH DATABASE 'Alias-Name';
+</pre><p> Вот Алиас-Name &#39;тот же псевдоним, который вы использовали при присоединении базы данных с помощью ATTACH заявления. </p><hr><h1> SQLite - CREATE TABLE </h1><p> SQLite <b class="notranslate">CREATE TABLE оператор используется для создания новой таблицы в любом из данной базы данных.</b> Создание базовой таблицы включает в себя таблицу имен и определение ее столбцов и тип данных для каждого столбца. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис CREATE TABLE заявление выглядит следующим образом: </p><pre class="prettyprint notranslate">
+CREATE TABLE database_name.table_name(
+   column1 datatype  PRIMARY <span class="notranslate">KEY(one or more columns)</span> ,
+   column2 datatype,
+   column3 datatype,
+   .....
+   columnN datatype,
+);
+</pre><p> CREATE TABLE является ключевым словом, говорящим системе базы данных, чтобы создать новую таблицу. следует CREATE TABLE заявление уникальное имя или идентификатор таблицы. При желании вы можете указать <i class="notranslate">database_name</i> Alongwith <i class="notranslate">table_name</i> . </p><hr><h1> SQLite - DROP Таблица </h1><p> SQLite <b class="notranslate">DROP TABLE оператор используется для удаления определения таблицы и все связанные с ним данные, индексы, триггеры, ограничения и спецификации разрешений для этой таблицы.</b> </p><blockquote> Вы должны быть осторожны при использовании этой команды, потому что когда таблица удаляется, то вся информация доступна в таблице также будут потеряны навсегда. </blockquote><hr><h2> Синтаксис: </h2><p> Базовый синтаксис DROP TABLE заявление выглядит следующим образом. При желании можно указать имя базы данных вместе с именем таблицы следующим образом: </p><pre class="prettyprint notranslate">
+DROP TABLE database_name.table_name;
+</pre><hr><h1> SQLite - INSERT запросов </h1><p> SQLite <b class="notranslate">INSERT INTO Заявление используется для добавления новых строк данных в таблицу в базе данных.</b> </p><hr><h2> Синтаксис: </h2><p> Есть два основных синтаксиса заявления INSERT INTO выглядит следующим образом: </p><pre class="prettyprint notranslate">
+INSERT INTO TABLE_NAME <span class="notranslate">(column1, column2, column3,...columnN)</span> ]  
+VALUES <span class="notranslate">(value1, value2, value3,...valueN)</span> ;
+</pre><p> Здесь column1, column2, ... columnN имена столбцов в таблице, в которую вы хотите вставить данные. </p><p> Вам не нужно указать <span class="notranslate">column(s)</span> имя в запросе SQLite , если вы добавляете значения для всех столбцов таблицы. Но убедитесь, что порядок значений в том же порядке, что и столбцы в таблице. Синтаксис SQLite INSERT INTO будет выглядеть следующим образом: </p><pre class="prettyprint notranslate">
+INSERT INTO TABLE_NAME VALUES <span class="notranslate">(value1,value2,value3,...valueN)</span> ;
+</pre><hr><h1> SQLite - запрос на выборку </h1><p> SQLite <b class="notranslate">SELECT , оператор используется для извлечения данных из SQLite таблицы базы данных , которая возвращает данные в виде таблицы результатов.</b> Эти таблицы результатов также называются результирующие наборы. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис заявления SQLite SELECT, выглядит следующим образом: </p><pre class="prettyprint notranslate">
+SELECT column1, column2, columnN FROM table_name;
+</pre><p> Здесь column1, column2 ... является полем таблицы, значение которых вы хотите получать. Если вы хотите, чтобы извлечь все поля, доступные в поле, то вы можете использовать следующий синтаксис: </p><pre class="prettyprint notranslate">
+SELECT * FROM table_name;
+</pre><hr><h1> SQLite - Операторы </h1><p> Оператор является зарезервированным словом или символ , используемым главным образом в том, где оговорках о SQLite заявления для выполнения <span class="notranslate">operation(s)</span> , таких , как сравнения и арифметические операции. </p><p> Операторы используются для определения условий в SQLite заявления и служить в качестве конъюнкций для нескольких условий в заявлении. </p><ul class="list"><li><p> Арифметические операторы </p></li><li><p> операторы сравнения </p></li><li><p> Логические операторы </p></li><li><p> Bitwsie операторы </p></li></ul><hr><h2> SQLite Арифметические операторы: </h2><p> Предположим, переменная а имеет место 10 и переменная Ь имеет 20, то: </p><p> <a href="sqlite_arithmetic_operators.html" title="Арифметические операторы в SQLite">Показать примеры</a> </p><table class="table table-bordered"><tbody><tr><th style="width:20%"> оператор </th><th style="width:45%"> Описание </th><th> пример </th></tr><tr><td class="notranslate">+</td><td class="notranslate">Addition - Adds values on either side of the operator</td><td> A + B будет давать 30 </td></tr><tr><td class="notranslate">-</td><td class="notranslate">Subtraction - Subtracts right hand operand from left hand operand</td><td> а - Ь даст -10 </td></tr><tr><td class="notranslate">*</td><td class="notranslate">Multiplication - Multiplies values on either side of the operator</td><td> а * б даст 200 </td></tr><tr><td class="notranslate">/</td><td class="notranslate">Division - Divides left hand operand by right hand operand</td><td> б / д даст 2 </td></tr><tr><td class="notranslate">%</td><td class="notranslate">Modulus - Divides left hand operand by right hand operand and returns remainder</td><td> б% а будет давать 0 </td></tr></tbody></table><hr><h2> SQLite Операторы сравнения: </h2><p> Предположим, переменная а имеет место 10 и переменная Ь имеет 20, то: </p><p> <a href="sqlite_comparison_operators.html" title="Операторы сравнения в SQLite">Показать примеры</a> </p><table class="table table-bordered"><tbody><tr><th style="width:20%"> оператор </th><th style="width:45%"> Описание </th><th> пример </th></tr><tr><td class="notranslate">==</td><td class="notranslate"> Checks if the value of two operands are equal or not, if yes then condition becomes true.</td><td> <span class="notranslate">(a == b)</span> не верно. </td></tr><tr><td class="notranslate">=</td><td class="notranslate"> Checks if the value of two operands are equal or not, if yes then condition becomes true.</td><td> <span class="notranslate">(a = b)</span> не соответствует действительности. </td></tr><tr><td class="notranslate">!=</td><td class="notranslate"> Checks if the value of two operands are equal or not, if values are not equal then condition becomes true.</td><td> <span class="notranslate">(a != b)</span> верно. </td></tr><tr><td class="notranslate">&lt;&gt;</td><td class="notranslate">Checks if the value of two operands are equal or not, if values are not equal then condition becomes true.</td><td> <span class="notranslate">(a <span class="notranslate">&lt;&gt;</span> b)</span> верно. </td></tr><tr><td class="notranslate">&gt;</td><td class="notranslate"> Checks if the value of left  operand is greater than the value of right operand, if yes then condition becomes true.</td><td> <span class="notranslate">(a &gt; b)</span> не соответствует действительности. </td></tr><tr><td class="notranslate">&lt;</td><td class="notranslate"> Checks if the value of left  operand is less than the value of right operand, if yes then condition becomes true.</td><td> <span class="notranslate">(a &lt; b)</span> истинно. </td></tr><tr><td class="notranslate">&gt;=</td><td class="notranslate"> Checks if the value of left  operand is greater than or equal to the value of right operand, if yes then condition becomes true.</td><td> <span class="notranslate">(a &gt;= b)</span> это не так. </td></tr><tr><td class="notranslate">&lt;=</td><td class="notranslate"> Checks if the value of left  operand is less than or equal to the value of right operand, if yes then condition becomes true.</td><td> <span class="notranslate">(a &lt;= b)</span> истинно. </td></tr><tr><td class="notranslate">!&lt;</td><td class="notranslate"> Checks if the value of left  operand is not less than the value of right operand, if yes then condition becomes true.</td><td> <span class="notranslate">(a !&lt; b)</span> неверно. </td></tr><tr><td class="notranslate">!&gt;</td><td class="notranslate"> Checks if the value of left  operand is not greater than the value of right operand, if yes then condition becomes true.</td><td> <span class="notranslate">(a !&gt; b)</span> верно. </td></tr></tbody></table><hr><h2> SQLite логических операторов: </h2><p> Вот список всех логических операторов, доступных в SQLite. </p><p> <a href="sqlite_logical_operators.html" title="Логические операторы в SQLite">Показать примеры</a> </p><table class="table table-bordered"><tr><th style="width:20%"> оператор </th><th style="width:80%"> Описание </th></tr><tr><td class="notranslate">AND</td><td> И оператор допускает существование нескольких условий в ИНЕКЕ SQL-инструкции. </td></tr><tr><td class="notranslate">BETWEEN</td><td> Между оператором используется для поиска значений, которые находятся в пределах набора значений, учитывая минимальное значение и максимальное значение. </td></tr><tr><td class="notranslate">EXISTS</td><td> Оператор EXISTS используется для поиска на наличие строки в указанной таблице, которые соответствуют определенным критериям. </td></tr><tr><td class="notranslate">IN</td><td> Оператор IN используется для сравнения значения в список буквенных значений, которые были определены. </td></tr><tr><td class="notranslate">NOT IN</td><td> Отрицание оператора, в котором используется для сравнения значения в список буквенных значений, которые были определены. </td></tr><tr><td class="notranslate">LIKE</td><td> LIKE Оператор используется для сравнения значения для аналогичных значений с использованием подстановочных операторов. </td></tr><tr><td class="notranslate">GLOB</td><td> Оператор GLOB используется для сравнения значения для аналогичных значений с использованием подстановочных операторов. Кроме того, GLOB чувствителен к регистру, в отличие от LIKE. </td></tr><tr><td class="notranslate">NOT</td><td> Оператор НЕ изменяет значение логического оператора, с которым она используется. Например. НЕ СУЩЕСТВУЕТ, а не между, НЕ и т.д. <b class="notranslate">This is negate operator.</b> </td></tr><tr><td class="notranslate">OR</td><td> Оператор OR используется для объединения нескольких условий в ИНЕКЕ SQL-инструкции. </td></tr><tr><td class="notranslate">IS NULL</td><td> Оператор NULL, используется для сравнения значения со значением NULL. </td></tr><tr><td class="notranslate">IS</td><td> IS оператор работает как = </td></tr><tr><td class="notranslate">IS NOT</td><td> IS оператор работа нравится! = </td></tr><tr><td class="notranslate">||</td><td> Добавляет две разные строки и сделать новый. </td></tr><tr><td class="notranslate">UNIQUE</td><td> Единственный оператор выполняет поиск каждой строки из указанной таблицы для единственности <span class="notranslate">(no duplicates)</span> . </td></tr></table><hr><h2> SQLite Битовые операторы: </h2><p> оператор побитовое работает над битами и выполнять по кусочкам операции. Таблица истинности для &amp; и | как следует: </p><table class="table table-bordered"><tr><th> п </th><th> Q </th><th> р &amp; д </th><th> р | Q </th></tr><tr><td> 0 </td><td> 0 </td><td> 0 </td><td> 0 </td></tr><tr><td> 0 </td><td> 1 </td><td> 0 </td><td> 1 </td></tr><tr><td> 1 </td><td> 1 </td><td> 1 </td><td> 1 </td></tr><tr><td> 1 </td><td> 0 </td><td> 0 </td><td> 1 </td></tr></table><p> Допустим, если А = 60; и В = 13; В настоящее время в двоичном формате они будут выглядеть следующим образом: </p><p> А = 0011 1100 </p><p> В = 0000 1101 </p><p> ----------------- </p><p> &amp; B = 0000 1100 </p><p> A | B = 0011 1101 </p><p> ~ А = 1100 0011 </p><p> Операторы Битовые поддерживаются SQLite языка, перечислены в следующей таблице. Предположим, переменная А имеет 60 и переменная В имеет место 13, то: </p><p> <a href="sqlite_bitwise_operators.html" title="Битовые операторы в SQLite">Показать примеры</a> </p><table class="table table-bordered"><tr><th width="10%"> оператор </th><th width="45%"> Описание </th><th> пример </th></tr><tr><td class="notranslate">&amp;</td><td class="notranslate"> Binary AND Operator copies a bit to the result if it exists in both operands. </td><td> <span class="notranslate">(A &amp; B)</span> дает 12 , который является 0000 1100 </td></tr><tr><td class="notranslate">|</td><td class="notranslate"> Binary OR Operator copies a bit if it exists in either operand. </td><td> <span class="notranslate">(A | B)</span> дает 61 , который является 0011 1101 </td></tr><tr><td class="notranslate">~</td><td class="notranslate"> Binary Ones Complement Operator is unary and has the effect of 'flipping' bits. </td><td> <span class="notranslate">(~A )</span> даст -61 , который 1100 0011 в форме дополнения 2&#39;S из - за подписанного двоичного числа. </td></tr><tr><td class="notranslate">&lt;&lt;</td><td class="notranslate"> Binary Left Shift Operator. The left operands value is moved left by the number of bits specified by the right operand. </td><td> A &lt;&lt; 2 даст 240, которое 1111 0000 </td></tr><tr><td class="notranslate">&gt;&gt;</td><td class="notranslate"> Binary Right Shift Operator. The left operands value is moved right by the number of bits specified by the right operand. </td><td> A &gt;&gt; 2 даст 15, который является 0000 1111 </td></tr></table><hr><h1> SQLite - Выражения </h1><p> Выражение представляет собой сочетание одного или нескольких значений, операторов и функций SQL, которые оценивают на значение. </p><p> SQL выражения, как формулы и они написаны на языке запросов. Вы можете также использовать для запроса к базе данных для конкретного набора данных. </p><hr><h2> Синтаксис: </h2><p> Рассмотрим основной синтаксис ЗЕЬЕСТ следующим образом: </p><pre class="prettyprint notranslate">
+SELECT column1, column2, columnN 
+FROM table_name 
+WHERE [CONTION | EXPRESSION];
+</pre><p> Существуют различные типы SQLite выражения, которые упомянуты ниже: </p><hr><h2> SQLite - логические выражения: </h2><p> SQLite Булевы выражения выборки данных на основе сопоставления одного значения. Ниже приводится синтаксис: </p><pre class="prettyprint notranslate">
+SELECT column1, column2, columnN 
+FROM table_name 
+WHERE SINGLE VALUE MATCHTING EXPRESSION;
+</pre><hr><h2> SQLite - числовое выражение: </h2><p> Эти выражения используются для выполнения какой-либо математической операции в любом запросе. Ниже приводится синтаксис: </p><pre class="prettyprint notranslate">
+SELECT numerical_expression as  OPERATION_NAME
+[FROM table_name WHERE CONDITION] ;
+</pre><p> Здесь numerical_expression используются для математического выражения или любой формулы. Ниже приведен простые примеры, показывающие использование SQL числовых выражений: </p><pre class="prettyprint notranslate">
+sqlite&gt; SELECT <span class="notranslate">(15 + 6)</span> AS ADDITION
+ADDITION = 21
+</pre><p> Есть несколько встроенных функций , как <span class="notranslate">avg()</span> , <span class="notranslate">sum()</span> , <span class="notranslate">count()</span> и т.д. , чтобы выполнить то , что известно как совокупные вычисления данных в отношении таблицы или конкретного столбца таблицы. </p><pre class="prettyprint notranslate">
+sqlite&gt; SELECT <span class="notranslate">COUNT(*)</span> AS <span class="notranslate">"RECORDS"</span> FROM COMPANY; 
+RECORDS = 7
+</pre><hr><h2> SQLite - Дата выражения: </h2><p> Дата выражение возвращает текущие значения даты и времени системы, и эти выражения будут использоваться в различных манипуляциях с данными. </p><pre class="prettyprint notranslate">
+sqlite&gt;  SELECT CURRENT_TIMESTAMP;
+CURRENT_TIMESTAMP = 2013-03-17 10:43:35
+</pre><hr><h1> SQLite - Предложение WHERE </h1><p> SQLite <b class="notranslate">WHERE используется условие , чтобы указать условие при выборке данных из одной таблицы или нескольких таблиц.</b> </p><p> Если данное условие выполняется, значит, верно, то он возвращает конкретное значение из таблицы. Вы могли бы использовать ИНЕКЕ для фильтрации записей и выборку только необходимые записи. </p><p> Предложение WHERE используется не только в ЗЕЬЕСТЕ, но он также используется в UPDATE, DELETE заявления и т.д., которые мы будем изучать в последующих главах. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис заявления SQLite SELECT, с ИНЕКЕМ выглядит следующим образом: </p><pre class="prettyprint notranslate">
+SELECT column1, column2, columnN 
+FROM table_name
+WHERE [condition]
+</pre><hr><h1> SQLite - И и ИЛИ Операторы </h1><hr><h2> Оператор AND: </h2><p> <b class="notranslate">AND оператор допускает существование нескольких условий WHERE оговорки о SQLite инструкции.</b> При использовании и оператор, полное условие будет считать истинным, когда все условия истинны. Так, например [условие1] и [условие2] будет справедливо только тогда, когда обе условие1 и условие2 являются истинными. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис и оператор с ИНЕКЕМ выглядит следующим образом: </p><pre class="prettyprint notranslate">
+SELECT column1, column2, columnN 
+FROM table_name
+WHERE [condition1] AND [condition2]...AND [conditionN];
+</pre><p> Вы можете объединить N число условий с помощью и оператора. Для действия, которые необходимо принять в SQLite заявления, будь то сделка или запрос, все условия, которые отделены друг от И должно быть TRUE. </p><hr><h2> OR Оператор: </h2><p> ИЛИ оператор также используется для объединения нескольких условий WHERE оговорки о SQLite инструкции. При использовании оператора ИЛИ, полное условие будет справедливо, когда предполагается, по крайней мере какое-либо из условий является истинным. Так, например [условие1] ИЛИ [условие2] будет справедливо, если либо условие1 или условие2 верно. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис оператор ИЛИ с ИНЕКЕМ выглядит следующим образом: </p><pre class="prettyprint notranslate">
+SELECT column1, column2, columnN 
+FROM table_name
+WHERE [condition1] OR [condition2]...OR [conditionN]
+</pre><p> Вы можете объединить N число условий с помощью оператора OR. Для действий, которые необходимо принять SQLite заявление, будь то транзакции или запрос, только любое одно из условий, разделенных OR должно быть истинным. </p><hr><h1> SQLite - UPDATE запросов </h1><p> SQLite <b class="notranslate">UPDATE Query используется для изменения существующих записей в таблице.</b> Вы можете использовать ИНЕКЕ с UPDATE запрос, чтобы обновить выбранные строки в противном случае все строки будут обновлены. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис UPDATE запроса с ИНЕКЕМ выглядит следующим образом: </p><pre class="prettyprint notranslate">
+UPDATE table_name
+SET column1 = value1, column2 = value2...., columnN = valueN
+WHERE [condition];
+</pre><p> Вы можете объединить N число условий с помощью И или ИЛИ операторы. </p><hr><h1> SQLite - запрос на удаление </h1><p> SQLite <b class="notranslate">DELETE запроса используется для удаления существующих записей из таблицы.</b> Вы можете использовать ИНЕКЕ с DELETE запроса, чтобы удалить выбранные строки, в противном случае все записи будут удалены. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис DELETE запроса с ИНЕКЕМ выглядит следующим образом: </p><pre class="prettyprint notranslate">
+DELETE FROM table_name
+WHERE [condition];
+</pre><p> Вы можете объединить N число условий с помощью И или ИЛИ операторы. </p><hr><h1> Вывод </h1> Если вам понравился этот короткий и быстрый учебник и интересно читать больше, чем я рекомендую вам пройти через подробный учебник, потому что до сих пор вам не хватает многих важных понятий, связанных с SQLite. </p><br><div class="w3-clear nextprev"> <a class="w3-left w3-btn" href="sqlite_python.html">❮ Предыдущая</a> <a class="w3-right w3-btn" href="sqlite_useful_resources.html">Следующая Глава ❯</a> </div></div>
+
+
+
+				
+			</div>
+			<div class="w3-col l2 m12" id="right">
+				<div class="sidesection">
+					<div id="skyscraper">
+								<iframe src="http://baby.stat777.com/index.php?r=site/post/view&id=2" width="160" height="600"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>					</div>
+				</div>
+				
+				<div id="stickypos" class="sidesection" style="text-align: center;">
+					<div id="stickyadcontainer">
+						<div style="position: relative; margin: auto;">
+									<iframe src="http://baby.stat777.com/index.php?r=site/post/view&id=2" width="160" height="600"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+<div id="footer" class="footer w3-container w3-white">
+	<hr>
+	<b>Рекламные ссылки</b>
+	<div style="overflow: auto">
+		<div class="bottomad">	<iframe src="http://baby.stat777.com/index.php?r=site/post/view&id=3" width="970" height="250"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe></div>
+		<div class="bottomad"></div>
+	</div>
+	<div class="w3-center w3-small w3-opacity">
+	<a href="http://www.w3ii.com/ru/index.html"><span>Главная</span></a> 
+	<a target="_blank" href="http://www.w3big.com/ru/"><span>HTML Руководство</span></a> 
+	<a target="_blank" href="http://www.bootstrap1.com/ru/">Bootstrap</a>
+	<a href="http://www.w3iz.com" target="_blank">Форум</a>
+	<a href="http://en-US.that-is-america.com" target="_blank">That is America</a>
+	<br>
+	©2017 W3im.com. All Rights Reserved.   Email: jacklee8902@gmail.com
+	<br>
+	<br>
+</div>
+
+<div class="hide">
+	<a href="http://en-us.hi-traveller.com" target="_blank">Hi Traveller</a>
+	<a href="http://en-us.fashion-tomorrow.com" target="_blank">Fashion Tomorrow</a>
+	<a href="http://en-us.startups-daily.com" target="_blank">Startups Daily</a>
+	<a href="http://en-us.news-fit.com" target="_blank">News Fit</a>
+	<a href="http://en-us.science-amazing.com" target="_blank">Science Amazing</a>
+	<a href="http://en-us.baby-yup.com" target="_blank">Baby Yup</a>
+	<a href="http://en-us.this-is-japan.com" target="_blank">This is Japan</a>
+	<a href="http://en-us.take-film.com" target="_blank">Take Film</a>
+	<a href="http://en-us.art-in-life.com" target="_blank">Art In Life</a>
+</div>	
+	<br>
+	<br>
+</div>
+
+	</div>
+	<script src="/lib/w3schools_footer.js"></script>
+	<script src="/lib/custom.js"></script>
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>  
+	<![endif]-->
+	
+</body>
+
+
+</html>

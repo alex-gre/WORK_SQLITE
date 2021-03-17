@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta name="baidu_union_verify" content="fca3240ebd8212086fdb898637e399a3">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQLite SELECT, запрос</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="HTML,CSS,JavaScript,SQL,PHP,jQuery,ASP,XML,DOM,Bootstrap,веб-разработка,W3C,учебные пособия,программирование,обучение,обучение,викторина,грунтовка,занятия,Рекомендации,Примеры,исходный код,цвета,демос,чаевые">
+<meta name="Description" content="Хорошо организованный и простой для понимания Web Building учебники с большим количеством примеров того, как использовать HTML, CSS, JavaScript, SQL, PHP и XML.">
+<link rel="stylesheet" href="http://stat777.com/js/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/lib/w3.css">
+<link rel="stylesheet" type="text/css" href="/browserref.css">
+<link rel="stylesheet" href="/lib/custom.css">
+<script src="http://stat777.com/js/jquery.min.js"></script>
+<script src="http://stat777.com/js/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://stat777.com/js/LRS.js"></script>
+</head>
+<!-- END HEAD -->
+
+
+
+<body>
+	<div class="w3-container top">
+	<a class="w3schools-logo" href="/ru/index.html">w3ii<span class="dotcom">.com</span></a>
+	<div class="w3-right toptext w3-wide">
+		<a href="http://www.w3iz.com" target="_blank">Форум</a> | 
+		Последние учебники веб-разработки	</div>
+</div>	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77782717-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+	
+	<div class='w3-card-2 w3-slim topnav' id='topnav'>
+		<div style="overflow: auto;">
+			<ul class="w3-navbar w3-left" style="width: 55%; overflow: hidden; height: 44px">
+				<li><a href='javascript:void(0);' class='topnav-localicons w3-hide-large w3-left' onclick='open_menu()' title='Menu'>&#9776;</a></li>
+				<li><a href="/ru/" class='topnav-icons fa fa-home w3-left' title='主页'></a></li>
+				<li><a href="/ru/html/default.html" class='w3-hide-small' title='HTML Руководство'>HTML</a></li>
+				<li><a href="/ru/css/default.html" class='w3-hide-small' title='CSS Руководство'>CSS</a></li>
+				<li><a href="/ru/js/default.html" class='w3-hide-small' title='JAVASCRIPT Руководство'>JAVASCRIPT</a></li>
+				<li><a href="/ru/sql/default.html" class='w3-hide-small' title='SQL Руководство'>SQL</a></li>
+				<li><a href="/ru/php/default.html" class='w3-hide-small' title='PHP Руководство'>PHP</a></li>
+				<li><a href="/ru/bootstrap/default.html" class='w3-hide-small' title='BOOTSTRAP Руководство'>BOOTSTRAP</a></li>
+				<li><a href="/ru/jquery/default.html" class='w3-hide-small' title='JQUERY Руководство'>JQUERY</a></li>
+				<li><a href="/ru/angular/default.html" class='w3-hide-small' title='ANGULAR Руководство'>ANGULAR</a></li>
+				<li><a href="/ru/xml/default.html" class='w3-hide-small' title='XML Руководство'>XML</a></li>
+			</ul>
+			<ul class="w3-navbar w3-right" style='width: 45%; overflow: hidden; height: 44px; text-transform:uppercase;'>
+				<li class="w3-right"><div class="select-language-wrap"><select name="languague" class="form-control select-language"><option value="en-US">English</option><option value="pt">Português</option><option value="id">Indonesia</option><option value="es">Español</option><option value="it">Italiano</option><option value="de">Deutsch</option><option value="fr">Français</option><option value="ru" selected>Pусский</option><option value="pl">polski</option><option value="tr">Türkçe‎</option><option value="ro">Română‎</option><option value="th">ไทย</option><option value="ar">العربية</option><option value="ko">한국어</option><option value="ja">日本语</option><option value="zh-TW">繁體中文</option><option value="zh-CN">简体中文</option></select><script>
+$(function() {
+	
+	$('.select-language').change(function() {
+	
+		var language = $(this).val();
+		var right = LRS.string.right(location.href, location.host);
+		var reg = new RegExp("\/([^\/]*)\/", 'i');
+		var arr = right.match(reg);
+		if(arr) {
+			if(LRS.array.has([
+'en-US', 
+'pt', 
+'id', 
+'es', 
+'it', 
+'de', 
+'fr', 
+'ru', 
+'pl', 
+'tr', 
+'ro', 
+'th', 
+'ar', 
+'ko', 
+'ja', 
+'zh-TW', 
+'zh-CN', 
+], arr[1])) {
+				right = right.substr(arr[1].length + 1);
+			}
+		}
+		var languageSection = language == 'en-US' ? '' : ('/' + language);
+		location.href = location.origin + languageSection + right;
+	});
+	
+});
+</script>	</div></li>
+				<li class="w3-right"><a id='topnavbtn_tutorials' href='javascript:void(0);' onclick='w3_open_nav("tutorials")' title='Tutorials'>Учебники <i class='fa fa-caret-down'></i><i class='fa fa-caret-up' style='display: none'></i></a></li>
+				<li class="w3-right"><a id='topnavbtn_references' href='javascript:void(0);' onclick='w3_open_nav("references")' title='References'>Рекомендации <i class='fa fa-caret-down'></i><i class='fa fa-caret-up' style='display: none'></i></a></li>
+				<li class="w3-right"><div class="donate-article"><div class="donate-wrapper">
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="QMX5QADTFSTGG">
+		<table>
+		<tr>
+		<input type="hidden" name="on0" value="Donate">
+		<select name="os0" class="form-control">
+		<option value="a">$ 4.99 USD</option>
+		<option value="b">$ 9.99 USD</option>
+		<option value="c">$ 49.90 USD</option>
+		<option value="d">$ 99.90 USD</option>
+		</select></tr>
+		</table>
+		<input type="hidden" name="currency_code" value="USD">
+		<input class="donate-button" type="image" src="http://stat777.com/images/utils/btn_sponsor.gif" border="0" name="submit" alt="PayPal——最安全便捷的在线支付方式！">
+		<img alt="" border="0" src="https://www.paypalobjects.com/zh_XC/i/scr/pixel.gif" width="1" height="1">
+		</form></div></div></li>
+			</ul>
+			
+			<div id='nav_tutorials' class='w3-dropnav w3-card-2'>
+				<span onclick='w3_close_nav("tutorials")' class='w3-closebtn w3-xlarge w3-hover-text-white'>&times;</span>
+				<div class='w3-row-padding w3-padding-xxlarge'>
+					<div class='w3-col l2 m4'>
+						<h3>HTML/CSS</h3>
+						<a href="/ru/html/default.html">Учить HTML</a> 
+						<a href="/ru/css/default.html">Учить CSS</a> 
+						<a href="/ru/w3css/default.html">Учить W3.CSS</a> 
+						<a href="/ru/colors/default.html">Учить Colors</a> 
+						<a href="/ru/bootstrap/default.html">Учить Bootstrap</a>
+						
+						<h3>JavaScript</h3>
+						<a href="/ru/js/default.html">Учить JavaScript</a> 
+						<a href="/ru/jquery/default.html">Учить jQuery</a>
+						<a href="/ru/jqueryui/default.html">Учить JqueryUI</a> 
+						<a href="/ru/jquerymobile/default.html">Учить jQuery Mobile</a> 
+						<a href="/ru/appml/default.html">Учить AppML</a> 
+						<a href="/ru/angular/default.html">Учить AngularJS</a>
+						<a href="/ru/angular_material/default.html">Учить Angular Material</a>
+						<a href="/ru/extjs/default.html">Учить Ext.js</a>
+						<a href="/ru/ajax/default.html">Учить AJAX</a> 
+						<a href="/ru/json/default.html">Учить JSON</a>
+						
+						<h3>XML Учебники</h3>
+						<a href="/ru/xml/default.html">Учить XML</a>
+						<a href="/ru/dom/default.html">Учить XML DOM</a> 
+						<a href="/ru/xsl/default.html">Учить XSLT</a>
+						<a href="/ru/ajax/default.html">Учить AJAX</a>
+						<a href="/ru/dtd/default.html">Учить DTD</a>
+						<a href="/ru/wsdl/default.html">Учить WSDL</a>
+						<a href="/ru/xpath/default.html">Учить XPath</a>
+						<a href="/ru/aiml/default.html">Учить AIML</a>
+						<a href="/ru/ebxml/default.html">Учить ebXML</a>
+						<a href="/ru/xml-rpc/default.html">Учить XML-RPC</a>
+						<a href="/ru/xquery/default.html">Учить XQuery</a>
+						<a href="/ru/xsd/default.html">Учить XSD</a>
+						<a href="/ru/xslt/default.html">Учить XSLT</a>
+						
+						<h3>академический</h3>
+						<a href="/ru/agile/default.html">Учить Agile</a>
+						<a href="/ru/accounting_basics/default.html">Учить Основы бухгалтерского учета</a>
+						<a href="/ru/artificial_intelligence/default.html">Учить Искусственный интеллект</a>
+						<a href="/ru/automata_theory/default.html">Учить Теория автоматов</a>
+						<a href="/ru/biometrics/default.html">Учить биометрия</a>
+						<a href="/ru/behavior_driven_development/default.html">Учить Поведение Driven Development</a>
+						<a href="/ru/cloud_computing/default.html">Учить Облачные вычисления</a>
+						<a href="/ru/compiler_design/default.html">Учить Compiler Design</a>
+						<a href="/ru/computer_fundamentals/default.html">Учить Основы работы с компьютером</a>
+						<a href="/ru/computer_graphics/default.html">Учить Компьютерная графика</a>
+						<a href="/ru/computer_logical_organization/default.html">Учить Компьютер Логическая организация</a>
+						<a href="/ru/cryptography/default.html">Учить криптография</a>
+						<a href="/ru/computer_networking/default.html">Учить Компьютерная сеть</a>
+						<a href="/ru/data_mining/default.html">Учить Сбор данных</a>
+						<a href="/ru/distributed_dbms/default.html">Учить Распределенная СУБД</a>
+						<a href="/ru/dwh/default.html">Учить Хранилище данных</a>
+						<a href="/ru/dbms/default.html">Учить DBMS</a>
+						<a href="/ru/dip/default.html">Учить Цифровая обработка изображений</a>
+						<a href="/ru/digital_signal_processing/default.html">Учить Цифровая обработка сигналов</a>
+						<a href="/ru/discrete_mathematics/default.html">Учить Дискретная математика</a>
+						<a href="/ru/embedded_systems/default.html">Учить Встроенные системы</a>
+						<a href="/ru/e_commerce/default.html">Учить Электронная коммерция</a>
+						<a href="/ru/extreme_programming/default.html">Учить Экстремальное программирование</a>
+						<a href="/ru/estimation_techniques/default.html">Учить Оценка методы</a>
+						<a href="/ru/genetic_algorithms/default.html">Учить Генетические алгоритмы</a>
+						<a href="/ru/graph_theory/default.html">Учить Теория графов</a>
+						<a href="/ru/human_computer_interface/default.html">Учить Интерфейс человек Компьютер</a>
+						<a href="/ru/information_security_cyber_law/default.html">Учить Закон информационной безопасности Cyber</a>
+						<a href="/ru/internet_technologies/default.html">Учить Интернет-технологии</a>
+						<a href="/ru/java_dip/default.html">Учить Java Цифровая обработка изображений</a>
+						<a href="/ru/management_information_system/default.html">Учить Информационная система управления</a>
+						<a href="/ru/mobile_computing/default.html">Учить Мобильные вычисления</a>
+						<a href="/ru/ooad/default.html">Учить OOAD</a>
+						<a href="/ru/operating_system/default.html">Учить Операционная система</a>
+						<a href="/ru/parallel_computer_architecture/default.html">Учить Архитектура параллельных вычислительных</a>
+						<a href="/ru/parallel_algorithm/default.html">Учить Параллельный алгоритм</a>
+						<a href="/ru/power_electronics/default.html">Учить Силовая электроника</a>
+						<a href="/ru/sdlc/default.html">Учить Разработка программного обеспечения жизненного цикла</a>
+						<a href="/ru/signals_and_systems/default.html">Учить Сигналы и системы</a>
+						<a href="/ru/software_architecture_design/default.html">Учить Архитектура программного обеспечения Дизайн</a>
+						<a href="/ru/software_engineering/default.html">Учить Программная инженерия</a>
+						<a href="/ru/vlsi_design/default.html">Учить VLSI дизайн</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>Веб-разработка</h3>
+						<a href="/ru/http/default.html">Учить HTTP</a>
+						<a href="/ru/mvc_framework/default.html">Учить MVC Framework</a>
+						<a href="/ru/sass/default.html">Учить Sass</a>
+						<a href="/ru/less/default.html">Учить Less</a>
+						<a href="/ru/webservices/default.html">Учить Web Services</a>
+						<a href="/ru/restful/default.html">Учить RESTful</a>
+						<a href="/ru/web_icons/default.html">Учить Web Icons</a>
+						<a href="/ru/websockets/default.html">Учить WebSockets</a>
+						<a href="/ru/rss/default.html">Учить RSS</a>
+						<a href="/ru/ipv4/default.html">Учить IPv4</a>
+						<a href="/ru/ipv6/default.html">Учить IPv6</a>
+						<a href="/ru/soap/default.html">Учить SOAP</a>
+						<a href="/ru/svn/default.html">Учить SVN</a>
+						<a href="/ru/uddi/default.html">Учить UDDI</a>
+						<a href="/ru/cherrypy/default.html">Учить CherryPy</a>
+						<a href="/ru/ab_testing/default.html">Учить Тестирование А / Б</a>
+						<a href="/ru/aurelia/default.html">Учить Aurelia</a>
+						<a href="/ru/backbonejs/default.html">Учить BackboneJS</a>
+						<a href="/ru/codeigniter/default.html">Учить CodeIgniter</a>
+						<a href="/ru/coffeescript/default.html">Учить CoffeeScript</a>
+						<a href="/ru/cpanel/default.html">Учить cPanel</a>
+						<a href="/ru/drupal/default.html">Учить Drupal</a>
+						<a href="/ru/django/default.html">Учить Django</a>
+						<a href="/ru/emberjs/default.html">Учить EmberJS</a>
+						<a href="/ru/expressjs/default.html">Учить ExpressJS</a>
+						<a href="/ru/flask/default.html">Учить Flask</a>
+						<a href="/ru/flex/default.html">Учить Flex</a>
+						<a href="/ru/foundation/default.html">Учить Foundation</a>
+						<a href="/ru/grav/default.html">Учить Grav</a>
+						<a href="/ru/grunt/default.html">Учить Grunt</a>
+						<a href="/ru/gulp/default.html">Учить Gulp</a>
+						<a href="/ru/gwt/default.html">Учить GWT</a>
+						<a href="/ru/joomla/default.html">Учить Joomla</a>
+						<a href="/ru/jsf/default.html">Учить JSF</a>
+						<a href="/ru/knockoutjs/default.html">Учить KnockoutJS</a>
+						<a href="/ru/magento/default.html">Учить Magento</a>
+						<a href="/ru/materialdesignlite/default.html">Учить Material Design Lite</a>
+						<a href="/ru/materialize/default.html">Учить Materialize</a>
+						<a href="/ru/mootools/default.html">Учить MooTools</a>
+						<a href="/ru/purecss/default.html">Учить Pure.CSS</a>
+						<a href="/ru/reactjs/default.html">Учить ReactJS</a>
+						<a href="/ru/ruby-on-rails/default.html">Учить Ruby on Rails</a>
+						<a href="/ru/turbogears/default.html">Учить TurboGears</a>
+						<a href="/ru/vbscript/default.html">Учить VBScript</a>
+						<a href="/ru/web_developers_guide/default.html">Учить Веб Руководство разработчика</a>
+						<a href="/ru/web2py/default.html">Учить Web2py</a>
+						<a href="/ru/webgl/default.html">Учить WebGL</a>
+						<a href="/ru/webrtc/default.html">Учить WebRTC</a>
+						<a href="/ru/wordpress/default.html">Учить WordPress</a>
+						<a href="/ru/xhtml/default.html">Учить XHTML</a>
+						
+						
+						
+						<h3>Web Building</h3>
+						<a href="/ru/website/default.html">Web Building</a> 
+						<a href="/ru/browsers/default.html">веб-статистика</a>
+						
+						<h3>Apache Учебники</h3>
+						<a href="/ru/ant/default.html">Учить Apache Ant</a>
+						<a href="/ru/apache_poi/default.html">Учить Apache POI</a>
+						<a href="/ru/apache_poi_ppt/default.html">Учить Apache POI PPT</a>
+						<a href="/ru/apache_poi_word/default.html">Учить Apache POI Word</a>
+						<a href="/ru/tika/default.html">Учить Apache TIKA</a>
+						<a href="/ru/xerces/default.html">Учить Apache Xerces</a>
+						<a href="/ru/apache_flume/default.html">Учить Apache Flume</a>
+						<a href="/ru/impala/default.html">Учить Apache Impala</a>
+						<a href="/ru/apache_pig/default.html">Учить Apache Pig</a>
+						<a href="/ru/apache_spark/default.html">Учить Apache Spark</a>
+						<a href="/ru/apache_storm/default.html">Учить Apache Storm</a>
+						<a href="/ru/apache_kafka/default.html">Учить Apache Kafka</a>
+						
+						<h3>MISC Учебники</h3>
+						<a href="/ru/drools/default.html">Учить Drools</a>
+						<a href="/ru/dll/default.html">Учить DLL</a>
+						<a href="/ru/git/default.html">Учить Git</a>
+						<a href="/ru/gradle/default.html">Учить Gradle</a>
+						<a href="/ru/gnu_debugger/default.html">Учить GDB Debugger</a>
+						<a href="/ru/itil/default.html">Учить ITIL</a>
+						<a href="/ru/jboss_fuse/default.html">Учить JBoss Fuse</a>
+						<a href="/ru/makefile/default.html">Учить Makefile</a>
+						<a href="/ru/parrot/default.html">Учить Parrot</a>
+						<a href="/ru/kdbplus/default.html">Учить KDB+</a>
+						<a href="/ru/radius/default.html">Учить Radius</a>
+						<a href="/ru/uml/default.html">Учить UML</a>
+						<a href="/ru/unix_sockets/default.html">Учить Unix Socket</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>Интернет-маркетинг</h3>
+						<a href="/ru/seo/default.html">Учить SEO</a>
+						<a href="/ru/social_media_marketing/default.html">Учить Маркетинг в области СМИ</a>
+						<a href="/ru/pay_per_click/default.html">Учить Pay Per Click</a>
+						<a href="/ru/web_analytics/default.html">Учить веб-аналитика</a>
+						<a href="/ru/online_marketing/default.html">Учить Онлайн маркетинг</a>
+						<a href="/ru/mobile_marketing/default.html">Учить Мобильный маркетинг</a>
+						<a href="/ru/email_marketing/default.html">Учить Рекламная рассылка</a>
+						<a href="/ru/content_marketing/default.html">Учить Содержание маркетинга</a>
+						<a href="/ru/twitter_marketing/default.html">Учить Twitter Маркетинг</a>
+						<a href="/ru/pinterest_marketing/default.html">Учить Pinterest маркетинг</a>
+					
+						<h3>HTML Графика</h3>
+						<a href="/ru/canvas/default.html">Учить Canvas</a> 
+						<a href="/ru/svg/default.html">Учить SVG</a> 
+						<a href="/ru/icons/default.html">Учить Icons</a> 
+						<a href="/ru/googleapi/default.html">Учить Google Maps</a> 
+						<a href="/ru/games/default.html">Учить HTML Games</a>
+						
+						<h3>Telecom Учебники</h3>
+						<a href="/ru/5g/default.html">Учить 5G</a>
+						<a href="/ru/cdma/default.html">Учить CDMA</a>
+						<a href="/ru/gprs/default.html">Учить GPRS</a>
+						<a href="/ru/gsm/default.html">Учить GSM</a>
+						<a href="/ru/i-mode/default.html">Учить i-Mode</a>
+						<a href="/ru/lte/default.html">Учить LTE</a>
+						<a href="/ru/ngn/default.html">Учить NGN</a>
+						<a href="/ru/session_initiation_protocol/default.html">Учить SIP</a>
+						<a href="/ru/telecom-billing/default.html">Учить Telecom Billing</a>
+						<a href="/ru/umts/default.html">Учить UMTS</a>
+						<a href="/ru/wap/default.html">Учить WAP</a>
+						<a href="/ru/wi-fi/default.html">Учить Wi-Fi</a>
+						<a href="/ru/wimax/default.html">Учить WiMAX</a>
+						<a href="/ru/wml/default.html">Учить WML</a>
+						
+						<h3>Разработка мобильных</h3>
+						<a href="/ru/android/default.html">Учить Android</a>
+						<a href="/ru/cordova/default.html">Учить Cordova</a>
+						<a href="/ru/ios/default.html">Учить iOS</a>
+						<a href="/ru/ionic/default.html">Учить Ionic</a>
+						<a href="/ru/meteor/default.html">Учить Meteor</a>
+						<a href="/ru/phonegap/default.html">Учить PhoneGap</a>
+						<a href="/ru/sl4a/default.html">Учить SL4A</a>
+						
+						<h3>Mainframe разработка</h3>
+						<a href="/ru/cics/default.html">Учить CICS</a>
+						<a href="/ru/ims_db/default.html">Учить IMS DB</a>
+						<a href="/ru/vsam/default.html">Учить VSAM</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>на стороне сервера</h3>
+						<a href="/ru/sql/default.html">Учить SQL</a> 
+						<a href="/ru/php/default.html">Учить PHP</a>
+						<a href="/ru/php7/default.html">Учить PHP 7</a>
+						<a href="/ru/asp/default.html">Учить ASP</a> 
+						<a href="/ru/aspnet/default.html">Учить ASP.NET</a>
+						<a href="/ru/ruby/default.html">Учить Ruby</a>
+						<a href="/ru/perl/default.html">Учить Perl</a>
+						<a href="/ru/laravel/default.html">Учить Laravel</a>
+						<a href="/ru/python/default.html">Учить Python</a>
+						<a href="/ru/python3/default.html">Учить Python 3</a>
+						<a href="/ru/wxpython/default.html">Учить wxPython</a>
+						<a href="/ru/unix/default.html">Учить UNIX</a>
+						<a href="/ru/swift/default.html">Учить Swift</a>
+						<a href="/ru/nodejs/default.html">Учить Node.js</a>
+						<a href="/ru/arduino/default.html">Учить Arduino</a>
+						<a href="/ru/cprogramming/default.html">Учить C</a>
+						<a href="/ru/cplusplus/default.html">Учить C++</a>
+						<a href="/ru/csharp/default.html">Учить C#</a>
+						<a href="/ru/go/default.html">Учить Go</a>
+						<a href="/ru/objective_c/default.html">Учить Objective-C</a>
+						<a href="/ru/d_programming/default.html">Учить D</a>
+						<a href="/ru/r/default.html">Учить R</a>
+						<a href="/ru/pascal/default.html">Учить Pascal</a>
+						<a href="/ru/scala/default.html">Учить Scala</a>
+						<a href="/ru/vba/default.html">Учить VBA</a>
+						<a href="/ru/matlab/default.html">Учить MATLAB</a>
+						<a href="/ru/lisp/default.html">Учить LISP</a>
+						<a href="/ru/groovy/default.html">Учить Groovy</a>
+						<a href="/ru/fortran/default.html">Учить Fortran</a>
+						<a href="/ru/fsharp/default.html">Учить F#</a>
+						<a href="/ru/erlang/default.html">Учить Erlang</a>
+						<a href="/ru/clojure/default.html">Учить Clojure</a>
+						<a href="/ru/apex/default.html">Учить Apex</a>
+						<a href="/ru/assembly_programming/default.html">Учить Assembly</a>
+						<a href="/ru/awk/default.html">Учить AWK</a>
+						<a href="/ru/c_standard_library/default.html">Учить C Library</a>
+						<a href="/ru/cobol/default.html">Учить COBOL</a>
+						<a href="/ru/computer_programming/default.html">Учить Компьютерное программирование</a>
+						<a href="/ru/data_structures_algorithms/default.html">Учить Структура данных & Алгоритмы</a>
+						<a href="/ru/euphoria/default.html">Учить Euphoria</a>
+						<a href="/ru/jcl/default.html">Учить JCL</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>Базы данных Учебники</h3>
+						<a href="/ru/mysql/default.html">Учить MySQL</a>
+						<a href="/ru/memcached/default.html">Учить Memcached</a>
+						<a href="/ru/postgresql/default.html">Учить PostgreSQL</a>
+						<a href="/ru/mongodb/default.html">Учить MongoDB</a>
+						<a href="/ru/sqlite/default.html">Учить SQLite</a>
+						<a href="/ru/db2/default.html">Учить DB2</a>
+						<a href="/ru/documentdb/default.html">Учить DocumentDB</a>
+						<a href="/ru/documentdb_sql/default.html">Учить DocumentDB SQL</a>
+						<a href="/ru/neo4j/default.html">Учить Neo4j</a>
+						<a href="/ru/obiee/default.html">Учить OBIEE</a>
+						<a href="/ru/orientdb/default.html">Учить OrientDB</a>
+						<a href="/ru/plsql/default.html">Учить PL/SQL</a>
+						<a href="/ru/pouchdb/default.html">Учить PouchDB</a>
+						<a href="/ru/t_sql/default.html">Учить T-SQL</a>
+						
+						<h3>Большие данные & аналитика Учебники</h3>
+						<a href="/ru/hadoop/default.html">Учить Hadoop</a>
+						<a href="/ru/hbase/default.html">Учить HBase</a>
+						<a href="/ru/hive/default.html">Учить Hive</a>
+						<a href="/ru/spark_sql/default.html">Учить Spark SQL</a>
+						<a href="/ru/avro/default.html">Учить AVRO</a>
+						<a href="/ru/couchdb/default.html">Учить CouchDB</a>
+						<a href="/ru/cassandra/default.html">Учить Cassandra</a>
+						<a href="/ru/googlecharts/default.html">Учить Google Charts</a>
+						<a href="/ru/hcatalog/default.html">Учить HCatalog</a>
+						<a href="/ru/highcharts/default.html">Учить Highcharts</a>
+						<a href="/ru/map_reduce/default.html">Учить MapReduce</a>
+						<a href="/ru/mahout/default.html">Учить Mahout</a>
+						<a href="/ru/pentaho/default.html">Учить Pentaho</a>
+						<a href="/ru/qlikview/default.html">Учить QlikView</a>
+						<a href="/ru/sas/default.html">Учить SAS</a>
+						<a href="/ru/sqoop/default.html">Учить Sqoop</a>
+						<a href="/ru/statistics/default.html">Учить Статистика</a>
+						<a href="/ru/teradata/default.html">Учить Teradata</a>
+						<a href="/ru/tableau/default.html">Учить Tableau</a>
+						<a href="/ru/zookeeper/default.html">Учить Zookeeper</a>
+						
+						<h3>Веб хостинг</h3>
+						<a href="/ru/ssh/default.html">Учить SSH</a>
+						<a href="/ru/ftp/default.html">Учить FTP</a>
+						<a href="/ru/filezilla/default.html">Учить FileZilla</a>
+						<a href="/ru/webhosting/default.html">Учить Веб хостинг</a>
+						<a href="/ru/create_website/default.html">Учить Создание веб-сайта</a>
+						<a href="/ru/php-mysql/default.html">Учить Php-MySQL</a>
+						<a href="/ru/supercacher/default.html">Учить SuperCacher</a>
+						<a href="/ru/phpmyadmin/default.html">Учить PhpMyAdmin</a>
+						<a href="/ru/whm/default.html">Учить WHM торговый посредник</a>
+						<a href="/ru/smart_phones/default.html">Учить Смартфоны</a>
+						<a href="/ru/cloud/default.html">Учить Облако хостинг</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>JAVA технологии</h3>
+						<a href="/ru/java/default.html">Учить Java</a>
+						<a href="/ru/java8/default.html">Учить Java 8</a>
+						<a href="/ru/jsp/default.html">Учить JSP</a>
+						<a href="/ru/jdb/default.html">Учить JDB</a>
+						<a href="/ru/jdbc/default.html">Учить JDBC</a>
+						<a href="/ru/java_xml/default.html">Учить Java XML</a>
+						<a href="/ru/spring/default.html">Учить Spring</a>
+						<a href="/ru/struts_2/default.html">Учить Struts 2</a>
+						<a href="/ru/hibernate/default.html">Учить Hibernate</a>
+						<a href="/ru/maven/default.html">Учить Maven</a>
+						<a href="/ru/lucene/default.html">Учить Lucene</a>
+						<a href="/ru/servlets/default.html">Учить Servlets</a>
+						<a href="/ru/swing/default.html">Учить SWING</a>
+						<a href="/ru/jmeter/default.html">Учить jMeter</a>
+						<a href="/ru/jackson/default.html">Учить Jackson</a>
+						<a href="/ru/junit/default.html">Учить JUnit</a>
+						<a href="/ru/javamail_api/default.html">Учить JavaMail API</a>
+						<a href="/ru/ejb/default.html">Учить EJB</a>
+						<a href="/ru/guava/default.html">Учить Guava</a>
+						<a href="/ru/ibatis/default.html">Учить iBATIS</a>
+						<a href="/ru/jbpm5/default.html">Учить jBPM5</a>
+						<a href="/ru/jfreechart/default.html">Учить JFreeChart</a>
+						<a href="/ru/jogl/default.html">Учить JOGL</a>
+						<a href="/ru/jpa/default.html">Учить JPA</a>
+						<a href="/ru/log4j/default.html">Учить log4j</a>
+						<a href="/ru/xstream/default.html">Учить XStream</a>
+						<a href="/ru/easymock/default.html">Учить EasyMock</a>
+						<a href="/ru/eclipse/default.html">Учить Eclipse</a>
+						<a href="/ru/design_pattern/default.html">Учить Design Patterns</a>
+						
+						<h3>Microsoft</h3>
+						<a href="/ru/asp.net/default.html">Учить ASP.NET</a>
+						<a href="/ru/asp.net_mvc/default.html">Учить ASP.NET MVC</a>
+						<a href="/ru/asp.net_wp/default.html">Учить ASP.NET WP</a>
+						<a href="/ru/batch_script/default.html">Учить Batch Script</a>
+						<a href="/ru/entity_framework/default.html">Учить Entity Framework</a>
+						<a href="/ru/nhibernate/default.html">Учить NHibernate</a>
+						<a href="/ru/linq/default.html">Учить LINQ</a>
+						<a href="/ru/mfc/default.html">Учить MFC</a>
+						<a href="/ru/microsoft_azure/default.html">Учить Microsoft Azure</a>
+						<a href="/ru/ms_project/default.html">Учить MS Project</a>
+						<a href="/ru/microstrategy/default.html">Учить MicroStrategy</a>
+						<a href="/ru/ms_sql_server/default.html">Учить MS SQL Server</a>
+						<a href="/ru/mvvm/default.html">Учить MVVM</a>
+						<a href="/ru/silverlight/default.html">Учить Silverlight</a>
+						<a href="/ru/vb.net/default.html">Учить VB.Net</a>
+						<a href="/ru/wcf/default.html">Учить WCF</a>
+						<a href="/ru/wpf/default.html">Учить WPF</a>
+						<a href="/ru/xaml/default.html">Учить XAML</a>
+						<a href="/ru/windows10_development/default.html">Учить Windows 10 разработка</a>
+						<a href="/ru/windows10/default.html">Учить Windows 10</a>
+						<a href="/ru/word/default.html">Учить Word</a>
+						<a href="/ru/excel/default.html">Учить Excel</a>
+						<a href="/ru/excel_charts/default.html">Учить Excel Charts</a>
+						<a href="/ru/advanced_excel/default.html">Учить Advanced Excel</a>
+						<a href="/ru/powerpoint/default.html">Учить Powerpoint</a>
+						
+						<h3>Программное обеспечение качества</h3>
+						<a href="/ru/concordion/default.html">Учить Concordion</a>
+						<a href="/ru/continuous_integration/default.html">Учить Непрерывная интеграция</a>
+						<a href="/ru/cucumber/default.html">Учить Cucumber</a>
+						<a href="/ru/jenkins/default.html">Учить Jenkins</a>
+						<a href="/ru/database_testing/default.html">Учить Тестирование базы данных</a>
+						<a href="/ru/cmmi/default.html">Учить CMMI</a>
+						<a href="/ru/etl_testing/default.html">Учить ETL Testing</a>
+						<a href="/ru/mockito/default.html">Учить Mockito</a>
+						<a href="/ru/mobile_testing/default.html">Учить Мобильное тестирование</a>
+						<a href="/ru/penetration_testing/default.html">Учить Тестирование на проникновение</a>
+						<a href="/ru/network_security/default.html">Учить Сетевая безопасность</a>
+						<a href="/ru/qc/default.html">Учить QC</a>
+						<a href="/ru/qunit/default.html">Учить QUnit</a>
+						<a href="/ru/qtp/default.html">Учить QTP</a>
+						<a href="/ru/rspec/default.html">Учить RSpec</a>
+						<a href="/ru/sap_testing/default.html">Учить SAP Testing</a>
+						<a href="/ru/security_testing/default.html">Учить Тестирование безопасности</a>
+						<a href="/ru/selenium/default.html">Учить Selenium</a>
+						<a href="/ru/six_sigma/default.html">Учить Six Sigma</a>
+						<a href="/ru/software_testing_dictionary/default.html">Учить Тестирование программного обеспечения Словарь</a>
+						<a href="/ru/software_testing/default.html">Учить Тестирование программного обеспечения</a>
+						<a href="/ru/wireless_security/default.html">Учить Безопасность беспроводной сети</a>
+						<a href="/ru/computer_security/default.html">Учить Компьютерная безопасность</a>
+						<a href="/ru/internet_security/default.html">Учить интернет-безопасность</a>
+						
+					</div>
+				</div>
+				<br>
+			</div>
+			<div id='nav_references' class='w3-dropnav w3-card-2'>
+				<span onclick='w3_close_nav("references")' class='w3-closebtn w3-xlarge w3-hover-text-white'>&times;</span>
+				<div class='w3-row-padding w3-padding-xxlarge'>
+					<div class='w3-col l2 m4'>
+						<h3>HTML</h3>
+						<a href="/ru/tags/default.html">HTML Tag Справка</a> 
+						<a href="/ru/tags/ref_eventattributes.html">HTML Event Справка</a> 
+						<a href="/ru/colors/default.html">HTML Color Справка</a>
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>CSS</h3>
+						<a href="/ru/cssref/default.html">CSS Справка</a> 
+						<a href="/ru/cssref/css_selectors.html">CSS Selector Справка</a> 
+						<a href="/ru/w3css/w3css_references.html">W3.CSS Справка</a> 
+						<a href="/ru/bootstrap/bootstrap_ref_css_text.html">Bootstrap Справка</a>
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>JavaScript</h3>
+						<a href="/ru/jsref/default.html">JavaScript Справка</a> 
+						<a href="/ru/jsref/default.html">HTML DOM Справка</a> 
+						<a href="/ru/jquery/jquery_ref_selectors.html">jQuery Справка</a> 
+						<a href="/ru/jquerymobile/jquerymobile_ref_data.html">jQuery Mobile Справка</a> 
+						<a href="/ru/angular/angular_ref_directives.html">AngularJS Справка</a> 
+						<a href="/ru/googleapi/google_maps_ref.html">Google Maps Справка</a>
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>на стороне сервера</h3>
+						<a href="/ru/php/php_ref_array.html">PHP Справка</a>
+						<a href="/ru/sql/sql_quickref.html">SQL Справка</a> 
+						<a href="/ru/asp/asp_ref_response.html">ASP Справка</a> 
+						<a href="/ru/aspnet/webpages_ref_classes.html">Razor Справка</a> 
+						<a href="/ru/aspnet/aspnet_refhtmlcontrols.html">ASP.NET Справка</a>
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>XML</h3>
+						<a href="/ru/xml/dom_nodetype.html">XML Справка</a> 
+						<a href="/ru/xsl/xsl_w3celementref.html">XSLT Справка</a> 
+						<a href="/ru/xml/schema_elements_ref.html">XML Schema Справка</a> 
+						<a href="/ru/svg/svg_reference.html">SVG Справка</a>
+						
+					</div>
+					<div class='w3-col l2 m4'>
+						<h3>Charsets</h3>
+						<a href="/ru/charsets/default.html">HTML Наборы символов</a> 
+						<a href="/ru/charsets/ref_html_ascii.html">HTML ASCII</a> 
+						<a href="/ru/charsets/ref_html_ansi.html">HTML ANSI</a> 
+						<a href="/ru/charsets/ref_html_ansi.html">HTML Windows-1252</a> 
+						<a href="/ru/charsets/ref_html_8859.html">HTML ISO-8859-1</a> 
+						<a href="/ru/charsets/ref_html_symbols.html">HTML Symbols</a> 
+						<a href="/ru/charsets/ref_html_utf8.html">HTML UTF-8</a>
+					</div>
+				</div>
+				<br>
+			</div>
+			<div id='nav_examples' class='w3-dropnav w3-card-2'>
+				<span onclick='w3_close_nav("examples")' class='w3-closebtn w3-xlarge w3-hover-text-white'>&times;</span>
+				<div class='w3-row-padding w3-padding-xxlarge'>
+					<div class='w3-col l3 m6'>
+						<h3>HTML/CSS</h3>
+						<a href="/ru/html/html_examples.html">HTML Примеры</a> 
+						<a href="/ru/css/css_examples.html">CSS Примеры</a> 
+						<a href="/ru/w3css/w3css_examples.html">W3.CSS Примеры</a>
+					</div>
+					<div class='w3-col l3 m6'>
+						<h3>JavaScript</h3>
+						<a href="/ru/js/js_examples.html">JavaScript Примеры</a> 
+						<a href="/ru/js/js_dom_examples.html">HTML DOM Примеры</a> 
+						<a href="/ru/jquery/jquery_examples.html">jQuery Примеры</a> 
+						<a href="/ru/jquerymobile/jquerymobile_examples.html">jQuery Mobile Примеры</a> 
+						<a href="/ru/angular/angular_examples.html">AngularJS Примеры</a> 
+						<a href="/ru/ajax/ajax_examples.html">AJAX Примеры</a>
+					</div>
+					<div class='w3-col l3 m6'>
+						<h3>на стороне сервера</h3>
+						<a href="/ru/php/php_examples.html">PHP Примеры</a> 
+						<a href="/ru/asp/asp_examples.html">ASP Примеры</a> 
+						<a href="/ru/aspnet/webpages_examples.html">Razor Примеры</a> 
+						<a href="/ru/aspnet/aspnet_examples.html">.NET Примеры</a>
+					</div>
+					<div class='w3-col l3 m6'>
+						<h3>XML</h3>
+						<a href="/ru/xml/xml_examples.html">XML Примеры</a> 
+						<a href="/ru/xsl/xsl_examples.html">XSL Примеры</a> 
+						<a href="/ru/xsl/xsl_examples.html">XSLT Примеры</a> 
+						<a href="/ru/xsl/xpath_examples.html">XPath Примеры</a> 
+						<a href="/ru/xml/schema_example.html">XML Schema Примеры</a> 
+						<a href="/ru/svg/svg_examples.html">SVG Примеры</a>
+					</div>
+				</div>
+				<br>
+			</div>
+		
+			
+			<div style='display:none;position:absolute;z-index:6;right:60px;height:57px;padding-top:12px;padding-right:20px;background-color:#4CAF50;' id='googleSearch'><div class='gcse-search'></div></div>
+			<div style='display:none;position:absolute;z-index:5;right:120px;height:57px;background-color:#4CAF50;text-align:right;padding-top:15px;' id='google_translate_element'></div>
+			
+		</div>
+	</div>
+	
+	<div class='w3-sidenav w3-collapse w3-slim' id='sidenav'>
+		<div id='leftmenuinner'>
+		<div class='w3-light-grey' id='leftmenuinnerinner'>
+		<a href='javascript:void(0)' onclick='close_menu()' class='w3-closebtn w3-hide-large w3-large' style='padding:3px 12px;'>&times;</a>
+<h2 class="left"><span class="left_h2">SQLite Руководство</span></h2><a target="_top" href="/ru/sqlite/default.html">SQLite Главная</a>
+<a target="_top" href="/ru/sqlite/sqlite_overview.html">SQLite обзор</a>
+<a target="_top" href="/ru/sqlite/sqlite_installation.html">SQLite Монтаж</a>
+<a target="_top" href="/ru/sqlite/sqlite_commands.html">SQLite команды</a>
+<a target="_top" href="/ru/sqlite/sqlite_syntax.html">SQLite Синтаксис</a>
+<a target="_top" href="/ru/sqlite/sqlite_data_types.html">SQLite Типы данных</a>
+<a target="_top" href="/ru/sqlite/sqlite_create_database.html">SQLite Создание базы данных</a>
+<a target="_top" href="/ru/sqlite/sqlite_attach_database.html">SQLite Присоединение базы данных</a>
+<a target="_top" href="/ru/sqlite/sqlite_detach_database.html">SQLite Отделить базы данных</a>
+<a target="_top" href="/ru/sqlite/sqlite_create_table.html">SQLite Создать таблицу</a>
+<a target="_top" href="/ru/sqlite/sqlite_drop_table.html">SQLite Drop Table</a>
+<a target="_top" href="/ru/sqlite/sqlite_insert_query.html">SQLite Вставка запросов</a>
+<a target="_top" href="/ru/sqlite/sqlite_select_query.html">SQLite Выбор запросов</a>
+<a target="_top" href="/ru/sqlite/sqlite_expressions.html">SQLite Выражения</a>
+<a target="_top" href="/ru/sqlite/sqlite_where_clause.html">SQLite Where пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_and_or_clauses.html">SQLite AND &amp; OR Морозы</a>
+<a target="_top" href="/ru/sqlite/sqlite_update_query.html">SQLite Обновление запросов</a>
+<a target="_top" href="/ru/sqlite/sqlite_delete_query.html">SQLite Удалить запрос</a>
+<a target="_top" href="/ru/sqlite/sqlite_like_clause.html">SQLite Like пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_glob_clause.html">SQLite Glob пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_limit_clause.html">SQLite Limit пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_order_by.html">SQLite Order By</a>
+<a target="_top" href="/ru/sqlite/sqlite_group_by.html">SQLite Group By</a>
+<a target="_top" href="/ru/sqlite/sqlite_having_clause.html">SQLite Having пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_distinct_keyword.html">SQLite Distinct Ключевое слово</a>
+<a target="_top" href="/ru/sqlite/sqlite_pragma.html">SQLite ПРАГМА</a>
+<a target="_top" href="/ru/sqlite/sqlite_constraints.html">SQLite Ограничения</a>
+<a target="_top" href="/ru/sqlite/sqlite_using_joins.html">SQLite Соединения</a>
+<a target="_top" href="/ru/sqlite/sqlite_unions_clause.html">SQLite Unions пункт</a>
+<a target="_top" href="/ru/sqlite/sqlite_null_values.html">SQLite Значения NULL</a>
+<a target="_top" href="/ru/sqlite/sqlite_alias_syntax.html">SQLite Алиас Синтаксис</a>
+<a target="_top" href="/ru/sqlite/sqlite_triggers.html">SQLite Триггеры</a>
+<a target="_top" href="/ru/sqlite/sqlite_indexes.html">SQLite Индексы</a>
+<a target="_top" href="/ru/sqlite/sqlite_indexed_by.html">SQLite проиндексированных</a>
+<a target="_top" href="/ru/sqlite/sqlite_alter_command.html">SQLite Alter Command</a>
+<a target="_top" href="/ru/sqlite/sqlite_truncate_table.html">SQLite усечение таблицы</a>
+<a target="_top" href="/ru/sqlite/sqlite_views.html">SQLite Просмотры</a>
+<a target="_top" href="/ru/sqlite/sqlite_transactions.html">SQLite операции</a>
+<a target="_top" href="/ru/sqlite/sqlite_sub_queries.html">SQLite Sub Запросы</a>
+<a target="_top" href="/ru/sqlite/sqlite_using_autoincrement.html">SQLite  Autoincrement</a>
+<a target="_top" href="/ru/sqlite/sqlite_injection.html">SQLite впрыскивание</a>
+<a target="_top" href="/ru/sqlite/sqlite_explain.html">SQLite объяснять</a>
+<a target="_top" href="/ru/sqlite/sqlite_vacuum.html">SQLite вакуум</a>
+<a target="_top" href="/ru/sqlite/sqlite_date_time.html">SQLite Дата &amp; Время</a>
+<a target="_top" href="/ru/sqlite/sqlite_useful_functions.html">SQLite Полезные функции</a>
+<a target="_top" href="/ru/sqlite/sqlite_c_cpp.html">SQLite C/C++</a>
+<a target="_top" href="/ru/sqlite/sqlite_java.html">SQLite Java</a>
+<a target="_top" href="/ru/sqlite/sqlite_php.html">SQLite PHP</a>
+<a target="_top" href="/ru/sqlite/sqlite_perl.html">SQLite Perl</a>
+<a target="_top" href="/ru/sqlite/sqlite_python.html">SQLite Python</a>
+<a target="_top" href="/ru/sqlite/sqlite_quick_guide.html">SQLite Краткое пособие</a>
+<a target="_top" href="/ru/sqlite/sqlite_useful_resources.html">SQLite Полезные ресурсы</a>
+<br><br><br></div></div>&nbsp;</div>	
+	<div class='w3-main w3-light-grey' id='belowtopnav' style='margin-left: 220px;'>
+		<div class='w3-row w3-white'>
+			<div class='w3-col l10 m12' id='main'>
+				<div id='mainLeaderboard' style='overflow: hidden;'>	<iframe src="http://baby.stat777.com/index.php?r=site/post/view&id=1" width="728" height="90"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe></div>
+				
+				
+<h1>SQLite SELECT, запрос</h1>
+
+<div class="view-auto-word">
+	</div>
+
+<div class="article-content">
+	<div class="w3-clear nextprev"> <a class="w3-left w3-btn" href="sqlite_insert_query.html">❮ Предыдущая</a> <a class="w3-right w3-btn" href="sqlite_operators.html">Следующая Глава ❯</a> </div><br><p> SQLite <b class="notranslate">SELECT , оператор используется для извлечения данных из SQLite таблицы базы данных , которая возвращает данные в виде таблицы результатов.</b> Эти таблицы результатов также называются результирующие наборы. </p><hr><h2> Синтаксис: </h2><p> Базовый синтаксис заявления SQLite SELECT, выглядит следующим образом: </p><pre class="prettyprint notranslate">
+SELECT column1, column2, columnN FROM table_name;
+</pre><p> Здесь column1, column2 ... является поле таблицы, значение которых вы хотите получать. Если вы хотите, чтобы извлечь все поля, доступные в поле, то вы можете использовать следующий синтаксис: </p><pre class="prettyprint notranslate">
+SELECT * FROM table_name;
+</pre><hr><h2> Пример: </h2><p> Рассмотрим таблицу COMPANY оказывает следующие записи: </p><pre class="prettyprint notranslate">
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+</pre><p> Ниже приведен пример, чтобы получать и отображать все эти записи с помощью ЗЕЬЕСТ. Здесь первые три команды были использованы для установки правильно форматированный вывод. </p><pre class="prettyprint notranslate">
+sqlite&gt;.header on
+sqlite&gt;.mode column
+sqlite&gt; SELECT * FROM COMPANY;
+</pre><p> И, наконец, вы получите следующий результат: </p><pre class="prettyprint notranslate">
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+</pre><p> Если вы хотите получать только выбранные поля таблицы COMPANY, а затем использовать следующий запрос: </p><pre class="prettyprint notranslate">
+sqlite&gt; SELECT ID, NAME, SALARY FROM COMPANY;
+</pre><p> Над запрос будет производить следующий результат: </p><pre class="prettyprint notranslate">
+ID          NAME        SALARY
+----------  ----------  ----------
+1           Paul        20000.0
+2           Allen       15000.0
+3           Teddy       20000.0
+4           Mark        65000.0
+5           David       85000.0
+6           Kim         45000.0
+7           James       10000.0
+</pre><hr><h2> Установка ширины выходного столбца: </h2><p> Иногда вы будете сталкиваться с проблемой , связанной с укороченным выходом в случае <b class="notranslate">.mode column , которое происходит из - за ширины по умолчанию столбца будет отображаться.</b> Что вы можете сделать то , что вы можете установить ширину столбцов отображаемым столбца с использованием <b class="notranslate">.width num, num.... команда выглядит следующим образом :</b> </p><pre class="prettyprint notranslate">
+sqlite&gt;.width 10, 20, 10
+sqlite&gt;SELECT * FROM COMPANY;
+</pre><p> Над <b class="notranslate">.width команды устанавливает ширину столбцов первой до 10, второй ширины колонки до 20 и третьей ширина колонки до 10. Таким образом , в конце концов выше ЗЕЬЕСТ даст следующий результат:</b> </p><pre class="prettyprint notranslate">
+ID          NAME                  AGE         ADDRESS     SALARY
+----------  --------------------  ----------  ----------  ----------
+1           Paul                  32          California  20000.0
+2           Allen                 25          Texas       15000.0
+3           Teddy                 23          Norway      20000.0
+4           Mark                  25          Rich-Mond   65000.0
+5           David                 27          Texas       85000.0
+6           Kim                   22          South-Hall  45000.0
+7           James                 24          Houston     10000.0
+</pre><hr><h2> Схема данных: </h2><p> Поскольку все <b class="notranslate">dot commads доступны в SQLite подскажите только, поэтому, делая ваше программирование с SQLite, вы будете использовать следующую инструкцию , чтобы вывести список всех таблиц , созданных в базе данных с помощью следующей ЗЕЬЕСТ с <b class="notranslate">sqlite_master</b> таблицей:</b> </p><pre class="prettyprint notranslate">
+sqlite&gt; SELECT tbl_name FROM sqlite_master WHERE type = 'table';
+</pre><p> Если у вас есть только COMPANY таблица в testDB.db, это даст следующий результат: </p><pre class="prettyprint notranslate">
+tbl_name
+----------
+COMPANY
+</pre><p> Вы можете перечислить вниз полную информацию о таблице COMPANY следующим образом: </p><pre class="prettyprint notranslate">
+sqlite&gt; SELECT sql FROM sqlite_master WHERE type = 'table' AND tbl_name = 'COMPANY';
+</pre><p> Если у вас есть только COMPANY таблица в testDB.db, это даст следующий результат: </p><pre class="prettyprint notranslate">
+CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        <span class="notranslate">CHAR(50)</span> ,
+   SALARY         REAL
+)
+</pre><br><div class="w3-clear nextprev"> <a class="w3-left w3-btn" href="sqlite_insert_query.html">❮ Предыдущая</a> <a class="w3-right w3-btn" href="sqlite_operators.html">Следующая Глава ❯</a> </div></div>
+
+
+
+				
+			</div>
+			<div class="w3-col l2 m12" id="right">
+				<div class="sidesection">
+					<div id="skyscraper">
+								<iframe src="http://baby.stat777.com/index.php?r=site/post/view&id=2" width="160" height="600"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>					</div>
+				</div>
+				
+				<div id="stickypos" class="sidesection" style="text-align: center;">
+					<div id="stickyadcontainer">
+						<div style="position: relative; margin: auto;">
+									<iframe src="http://baby.stat777.com/index.php?r=site/post/view&id=2" width="160" height="600"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+<div id="footer" class="footer w3-container w3-white">
+	<hr>
+	<b>Рекламные ссылки</b>
+	<div style="overflow: auto">
+		<div class="bottomad">	<iframe src="http://baby.stat777.com/index.php?r=site/post/view&id=3" width="970" height="250"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe></div>
+		<div class="bottomad"></div>
+	</div>
+	<div class="w3-center w3-small w3-opacity">
+	<a href="http://www.w3ii.com/ru/index.html"><span>Главная</span></a> 
+	<a target="_blank" href="http://www.w3big.com/ru/"><span>HTML Руководство</span></a> 
+	<a target="_blank" href="http://www.bootstrap1.com/ru/">Bootstrap</a>
+	<a href="http://www.w3iz.com" target="_blank">Форум</a>
+	<a href="http://en-US.that-is-america.com" target="_blank">That is America</a>
+	<br>
+	©2017 W3im.com. All Rights Reserved.   Email: jacklee8902@gmail.com
+	<br>
+	<br>
+</div>
+
+<div class="hide">
+	<a href="http://en-us.hi-traveller.com" target="_blank">Hi Traveller</a>
+	<a href="http://en-us.fashion-tomorrow.com" target="_blank">Fashion Tomorrow</a>
+	<a href="http://en-us.startups-daily.com" target="_blank">Startups Daily</a>
+	<a href="http://en-us.news-fit.com" target="_blank">News Fit</a>
+	<a href="http://en-us.science-amazing.com" target="_blank">Science Amazing</a>
+	<a href="http://en-us.baby-yup.com" target="_blank">Baby Yup</a>
+	<a href="http://en-us.this-is-japan.com" target="_blank">This is Japan</a>
+	<a href="http://en-us.take-film.com" target="_blank">Take Film</a>
+	<a href="http://en-us.art-in-life.com" target="_blank">Art In Life</a>
+</div>	
+	<br>
+	<br>
+</div>
+
+	</div>
+	<script src="/lib/w3schools_footer.js"></script>
+	<script src="/lib/custom.js"></script>
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>  
+	<![endif]-->
+	
+</body>
+
+
+</html>
