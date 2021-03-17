@@ -1,0 +1,1 @@
+INSERT INTO reg(id,login,password,info,log_date) VALUES(NULL,"loh2","111","other text",date());
